@@ -1,0 +1,230 @@
+generated: '2026-09-02'
+method: derived
+source: >-
+  Derived from https://atomik.app/documentation/data_versioning,
+  /documentation/audit_and_logging, /documentation/apis, /conformance,
+  /documentation/getting_started and the response payloads inlined there; plus the
+  entity paths in the published EHRServer Insomnia collection
+  (examples/cabolabs-ehrserver-2.0-insomnia.json). Derived 2026-09-02.
+note: >-
+  DERIVED, not searched - CaboLabs publishes no OpenAPI and no object reference, so
+  there are no $ref links to walk. Every entity and relationship below is named in
+  CaboLabs' own documentation or appears as a path segment / response field in its
+  own published request collection. Nothing is imported from the openEHR
+  specification that CaboLabs does not itself name.
+  The important structural fact: this is NOT a CaboLabs-proprietary data model. It
+  is the openEHR Reference Model Release-1.0.2, which means the entity graph is
+  specified by an external standards body and is portable across conformant CDRs.
+  A buyer's schema knowledge transfers; a buyer's data transfers.
+standard: openEHR Reference Model Release-1.0.2
+id_scheme:
+  object_version_id:
+    format: '{object_id}::{creating_system_id}::{version_tree_id}'
+    example: '1b2d2be2-24ff-48da-9ff0-e835ce36b80f::ATOMIK_EMR::1'
+    parts:
+    - name: object_id
+      description: UUID of the containing VERSIONED_OBJECT; identical across all versions of the same record.
+    - name: creating_system_id
+      description: Namespace identifying the system that created this version (e.g. ATOMIK_EMR, CABOLABS_ATOMIK_SERVER).
+    - name: version_tree_id
+      description: Linear version counter (1, 2, 3 ...).
+    note: >-
+      Passing a full OBJECT_VERSION_ID to a GET retrieves that exact historical
+      version; passing the bare VERSIONED_OBJECT id retrieves the latest. This dual
+      addressing is the whole history-access mechanism - there is no separate
+      history endpoint.
+  hier_object_id:
+    format: UUID
+    used_by: [ehr_id, system_id]
+    example: d5384e04-eff4-45a4-94c8-c98ec17cdf42
+entities:
+- name: EHR
+  domain: clinical
+  description: The Electronic Health Record container for one subject. Root of the clinical graph.
+  key: ehr_id (HIER_OBJECT_ID)
+  fields_observed: [_type, ehr_id, system_id, time_created, ehr_status]
+  endpoints: ['POST /api/v1/ehr', 'GET /rest/v1/ehrs', 'GET /rest/v1/ehrs/{uid}', 'GET /rest/v1/ehrs/subjectUid/{uid}']
+- name: EHR_STATUS
+  domain: clinical
+  versionable: true
+  description: >-
+    Status object attached to an EHR, carrying the subject link and the
+    is_modifiable / is_queryable flags.
+  fields_observed: [_type, name, uid, archetype_details, archetype_node_id, subject, is_modifiable, is_queryable]
+- name: VERSIONED_OBJECT
+  domain: clinical
+  description: >-
+    Container created the first time any versionable object is committed. Holds all
+    VERSIONs of that record. The original is never touched.
+- name: VERSION
+  domain: clinical
+  description: One immutable state of a versionable object, carrying its own OBJECT_VERSION_ID and its own AUDIT_DETAILS.
+- name: CONTRIBUTION
+  domain: clinical
+  description: >-
+    The unit of change. Created alongside a VERSION on every commit and carrying its
+    own AUDIT_DETAILS. Groups the versions committed together.
+  endpoints: ['GET /rest/v1/ehrs/{uid}/contributions', 'GET /rest/v1/contributions']
+- name: AUDIT_DETAILS
+  domain: provenance
+  description: >-
+    Provenance record attached to both CONTRIBUTION and VERSION. Not an add-on - it
+    is produced automatically on every write and cannot be skipped.
+  fields:
+  - name: system_id
+    description: The originating system.
+  - name: time_committed
+    description: Commit timestamp.
+  - name: change_type
+    values: [creation, modification, amendment, deleted]
+  - name: committer
+    description: Supplied by the caller in the openEHR-AUDIT_DETAILS.committer request header.
+  - name: description
+    description: Optional human-readable description of the change.
+- name: COMPOSITION
+  domain: clinical
+  versionable: true
+  description: The primary clinical document - one clinical event or encounter, structured by an Operational Template.
+  endpoints: ['POST /rest/v1/ehrs/{ehrUid}/compositions', 'POST /api/v1/ehrs/{ehrUid}/compositions']
+- name: FOLDER
+  domain: clinical
+  versionable: true
+  description: Organizational structure within an EHR (the DIRECTORY surface).
+- name: OPERATIONAL_TEMPLATE
+  domain: knowledge
+  description: >-
+    ADL 1.4 / AOM 1.4 Operational Template composing archetypes for a clinical
+    context. Defines the shape of valid COMPOSITIONs - data is validated against it
+    on commit, and a commit against a deleted template was a documented bug fixed in
+    September 2025.
+  endpoints: ['POST /api/v1/definition/template/adl1.4', 'GET /rest/v1/templates', 'GET /rest/v1/templates/{uid}']
+  content_type: application/xml (the last remaining XML surface)
+- name: PERSON
+  domain: demographic
+  versionable: true
+  description: openEHR demographic PARTY subtype. Added March 2023.
+- name: ORGANISATION
+  domain: demographic
+  versionable: true
+- name: GROUP
+  domain: demographic
+  versionable: true
+- name: AGENT
+  domain: demographic
+  versionable: true
+- name: ROLE
+  domain: demographic
+  versionable: true
+  description: Given an independent API in April 2025 for better role management on demographic entities.
+- name: PARTY_RELATIONSHIP
+  domain: demographic
+  versionable: true
+  description: Relationship between two demographic PARTYs. Added April 2023.
+- name: QUERY
+  domain: query
+  description: >-
+    A stored, named query built in the visual Query Builder and executed by uid.
+    Carries projections, conditions and flags (retrieve data, resolve refs).
+    Serialized to JSON since the March 2025 query-module rewrite.
+  endpoints: ['GET /rest/v1/queries', 'GET /rest/v1/queries/{queryUid}', 'POST /rest/v1/queries/{queryUid}/execute', 'POST /api/v1/query/composition/execute']
+- name: ORGANIZATION
+  domain: tenancy
+  description: >-
+    Tenancy boundary in EHRServer. A user is associated with one or more
+    organizations, and access to an EHR is denied when it belongs to an organization
+    the user is not associated with (error codes e01.0006-e01.0008, e05.0003,
+    e06.0008, e12.0004).
+  endpoints: ['GET /rest/v1/organizations']
+- name: USER
+  domain: tenancy
+  description: 'Two roles: Administrators (Web Console) and API users (REST only).'
+  endpoints: ['GET /rest/v1/users', 'GET /rest/v1/users/{username}', 'POST /rest/v1/users']
+- name: ATTESTATION
+  domain: provenance
+  description: Electronic signature over clinical data. Indexing added October 2025.
+relationships:
+- from: ORGANIZATION
+  to: USER
+  type: has_many
+  via: organization association
+  note: Multi-tenant. Login requires an organization number alongside credentials.
+- from: ORGANIZATION
+  to: EHR
+  type: has_many
+  via: owning organization
+  note: The authorization boundary - cross-organization EHR access is refused.
+- from: EHR
+  to: EHR_STATUS
+  type: has_one
+  via: ehr_status
+- from: EHR
+  to: COMPOSITION
+  type: has_many
+  via: ehrUid path segment
+- from: EHR
+  to: CONTRIBUTION
+  type: has_many
+  via: ehrUid path segment
+- from: EHR
+  to: PERSON
+  type: belongs_to
+  via: ehr_status.subject.external_ref (namespace "demographic", type "PERSON")
+  note: >-
+    The clinical and demographic graphs are joined here, and only here. The subject
+    is an external reference, so the demographic record can live in Atomik's own
+    demographic repository or in an external master patient index.
+- from: VERSIONED_OBJECT
+  to: VERSION
+  type: has_many
+  via: version_tree_id
+- from: VERSION
+  to: AUDIT_DETAILS
+  type: has_one
+  via: automatic on commit
+- from: CONTRIBUTION
+  to: AUDIT_DETAILS
+  type: has_one
+  via: automatic on commit
+- from: CONTRIBUTION
+  to: VERSION
+  type: has_many
+  via: commit grouping
+- from: COMPOSITION
+  to: OPERATIONAL_TEMPLATE
+  type: belongs_to
+  via: archetype_details.template_id
+  note: Validation dependency - a composition is validated against its template on commit.
+- from: EHR_STATUS
+  to: OPERATIONAL_TEMPLATE
+  type: belongs_to
+  via: archetype_details.template_id (e.g. ehr_status_generic_en_v1)
+- from: PARTY_RELATIONSHIP
+  to: PERSON
+  type: belongs_to
+  via: source/target party reference
+- from: ROLE
+  to: PERSON
+  type: belongs_to
+  via: performer/actor reference
+  note: Deleting an ACTOR can be configured (May 2025) to cascade-delete its relationships and roles.
+- from: QUERY
+  to: OPERATIONAL_TEMPLATE
+  type: belongs_to
+  via: archetype/template paths the query projects over
+- from: ATTESTATION
+  to: VERSION
+  type: belongs_to
+  via: attestation indexing
+versionable_types:
+- EHR_STATUS
+- FOLDER
+- COMPOSITION
+- PERSON
+- ORGANISATION
+- GROUP
+- AGENT
+- PARTY_RELATIONSHIP
+gaps:
+- No published JSON Schema, OpenAPI components.schemas, or object reference for any entity - field lists above are what CaboLabs' own examples and paths expose, not a complete schema.
+- The demographic API is a CaboLabs proposal rather than a ratified openEHR REST surface, so its entity shapes are not externally specified the way the clinical ones are.
+- No id-prefix convention (all identifiers are bare UUIDs), so an identifier carries no type information.

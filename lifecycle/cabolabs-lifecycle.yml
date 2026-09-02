@@ -1,0 +1,117 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  https://atomik.app/documentation/news, /documentation/apis, /conformance,
+  /documentation/data_versioning; https://cabolabs.com/our_software/atomik/pricing;
+  GitHub release metadata for CaboLabs/openEHR-SDK, CaboLabs/openEHR-CLI and
+  ppazos/cabolabs-ehrserver. Probed 2026-09-02.
+versioning:
+  api_versioning: URI path segment (/api/v1, /rest/v1)
+  spec_pinning: >-
+    The contract is pinned to an external specification release - openEHR ITS-REST
+    Release-1.0.2, RM Release-1.0.2, AM Release-2.2.0 - rather than to a CaboLabs
+    version. This is a genuine strength: a consumer versions against openEHR, not
+    against CaboLabs.
+  product_versioning:
+    atomik: >-
+      NOT published. No Atomik release number, build identifier or version endpoint
+      is documented, and the changelog entries carry dates only. A customer cannot
+      state which Atomik version they are running from public information.
+    ehrserver: GitHub releases, latest v2.3 (2020-09-06).
+    openehr_sdk: GitHub releases, latest 2.5.2 (2026-08-20).
+    openehr_cli: GitHub releases, latest 1.2.1 (2026-08-04).
+deprecation_policy:
+  published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation policy, notice period, or support window is published for any
+    CaboLabs API, and neither RFC 8594 Sunset nor Deprecation response headers are
+    documented. This is not a theoretical gap: Atomik has already executed one
+    breaking removal (all XML representations dropped from the APIs, June 2025) and
+    has PRE-ANNOUNCED a second (removal of XML from the Operational Template API,
+    "soon"), both announced only as a line in a prose changelog with no date and no
+    migration guide. Because there is no policy page, no Deprecation pointer is
+    emitted in apis.yml.
+  observed_deprecations:
+  - change: XML representation withdrawn from the Atomik APIs
+    announced: '2025-06'
+    notice_period: none published
+    source: https://atomik.app/documentation/news
+  - change: XML to be withdrawn from the Atomik Operational Template API
+    announced: '2025-06'
+    effective: not stated ("will be removed soon too")
+    notice_period: none published
+    source: https://atomik.app/documentation/news
+status_page:
+  published: false
+  url: null
+  note: >-
+    No status page, uptime history, or incident feed exists for CaboLabs, and none
+    is architecturally possible for the licensed products the way it is for a SaaS -
+    Atomik runs as a per-customer instance on the customer's or CaboLabs' managed
+    infrastructure, and EHRServer is self-hosted, so there is no shared production
+    surface to report on. Atomik does ship a Monitoring API family that "exposes
+    health and status indicators for external monitoring tools", which pushes the
+    status-reporting job onto the operator. No StatusPage pointer is emitted.
+  self_monitoring:
+    api_family: Monitoring
+    description: Health and status indicators for external monitoring tools, described as especially useful across a multi-instance cluster.
+    source: https://atomik.app/documentation/apis
+sla:
+  published: false
+  note: >-
+    No SLA, uptime commitment, or support-response target is published. The pricing
+    page lists "Support requirements - SLA, response time, integration help" as one
+    of the things CaboLabs asks about before quoting, which confirms SLAs are
+    negotiated per contract rather than published.
+support_tiers:
+  note: Support packages are sold separately from the self-hosted licence and bundled into the managed deployment tier. See plans/cabolabs-plans-pricing.yml.
+data_lifecycle:
+  retention: not published
+  versioning: >-
+    Append-only. Every modification creates a new VERSION inside a VERSIONED_OBJECT;
+    version 1 is never deleted. See the reversibility block in
+    conventions/cabolabs-conventions.yml.
+  deletion: >-
+    Two distinct paths. A logical delete is recorded as a VERSION with
+    AUDIT_DETAILS change_type 'deleted', leaving prior content retrievable. Physical
+    deletion is a separate Administrative API operation for right-to-be-forgotten
+    and is irreversible.
+  end_of_life_export: not documented
+product_lifecycle:
+- product: Atomik
+  status: active
+  evidence: Commercial CDR under active development; changelog entries through November 2025.
+- product: EHRServer
+  status: maintenance
+  evidence: >-
+    Last release v2.3 on 2020-09-06; last push to the repository 2023-03-13. Still
+    presented on cabolabs.com as current open-source software, and still the subject
+    of a training workshop, but it has had no release in almost six years and Atomik
+    is the product CaboLabs sells. A consumer should read EHRServer as the
+    open-source predecessor, not the current engine.
+- product: openEHR-SDK
+  status: active
+  evidence: 2.5.2 released 2026-08-20 - the most current thing CaboLabs ships.
+- product: openEHR-CLI
+  status: active
+  evidence: 1.2.1 released 2026-08-04; ships the CaboLabs MCP server.
+- product: CloudEHRServer
+  status: defunct
+  evidence: >-
+    cloudehrserver.com, the hosted EHRServer offering referenced by CaboLabs' own
+    blog and by the production environment in the published Insomnia collection
+    (server001.cloudehrserver.com), failed to connect on 2026-09-02 - TCP connection
+    to port 443 refused. The domain no longer serves. Treated as a retired product.
+roadmap:
+  published: false
+  known_items:
+  - item: openEHR EHR Extract support
+    source: https://atomik.app/conformance ("EHR Extract is not yet supported but is on the roadmap.")
+  - item: Public release of the SAQM specification
+    source: https://atomik.app/conformance ("The SAQM spec will be publicly available.")
+  - item: Removal of the last XML surface (Operational Template API)
+    source: https://atomik.app/documentation/news
+  note: No roadmap page exists; the three items above are scattered forward-looking statements in product docs. No Roadmap pointer is emitted.

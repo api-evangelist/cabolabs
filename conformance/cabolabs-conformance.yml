@@ -1,0 +1,213 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  https://atomik.app/conformance, https://atomik.app/documentation/apis,
+  https://atomik.app/documentation/audit_and_logging,
+  https://atomik.app/documentation/integrations,
+  https://atomik.app/documentation/security, and
+  https://github.com/ppazos/openehr-conformance-verification. Read 2026-09-02.
+note: >-
+  CaboLabs is a standards-conformance company, so this artifact is unusually
+  load-bearing: conformance IS the product. Every entry below cites the exact page
+  or repository where CaboLabs states the claim. Nothing is inferred from the
+  product category.
+domain_standard:
+  present: true
+  standard: openEHR ITS-REST
+  release: Release-1.0.2
+  sector: healthcare
+  evidence:
+    location: https://atomik.app/conformance
+    quote: >-
+      "Atomik complies with the openEHR REST API release 1.0.2, covering: EHR,
+      EHR_STATUS, CONTRIBUTION, COMPOSITION, and DIRECTORY."
+    corroboration: >-
+      https://atomik.app/documentation/apis links directly to
+      https://specifications.openehr.org/releases/ITS-REST/Release-1.0.2/ehr.html
+      and states "Atomik's implementation of the official openEHR EHR REST API.
+      Standard-compliant, so any client built against the spec works against Atomik
+      without modification."
+  buyer_consequence: >-
+    A buyer who already speaks openEHR ITS-REST integrates with no bespoke connector
+    - existing openEHR clients and tooling work unmodified, and existing Operational
+    Templates deploy as-is with no conversion step. A buyer who does not needs a
+    bilateral connector, which is exactly the integration work CaboLabs sells as a
+    service.
+  caveats:
+  - >-
+    Coverage is stated at the resource level (EHR, EHR_STATUS, CONTRIBUTION,
+    COMPOSITION, DIRECTORY) rather than operation by operation, and no conformance
+    test report, certification, or third-party attestation is published against it.
+  - >-
+    Two of Atomik's five API families are explicitly NOT covered by the standard.
+    The Demographic family is "Atomik's proposed API for the openEHR demographic
+    model (no official openEHR demographic REST API exists yet)" - a CaboLabs
+    proposal, not a ratified spec - and the Sync, Administrative and Monitoring
+    families are CaboLabs extensions.
+  - >-
+    EHR Extract is stated as not yet supported and on the roadmap.
+standards:
+- id: openehr-its-rest
+  name: openEHR ITS REST API
+  release: Release-1.0.2
+  conforms: true
+  evidence: >-
+    https://atomik.app/conformance - "Atomik complies with the openEHR REST API
+    release 1.0.2, covering: EHR, EHR_STATUS, CONTRIBUTION, COMPOSITION, and
+    DIRECTORY."
+- id: openehr-rm
+  name: openEHR Reference Model
+  release: Release-1.0.2
+  conforms: true
+  evidence: >-
+    https://atomik.app/conformance names "openEHR RM Release-1.0.2" as the spec
+    Atomik implements; the getting-started response payload carries
+    "rm_version": "1.0.2" on archetype_details. EHR Extract is listed as not yet
+    supported.
+- id: openehr-am
+  name: openEHR Archetype Model
+  release: Release-2.2.0
+  conforms: true
+  evidence: >-
+    https://atomik.app/conformance - "Atomik uses Operational Templates (OPTs) ...
+    Supports OPTs based on AOM 1.4. Spec: openEHR AM Release-2.2.0."
+- id: openehr-aom-1.4
+  name: openEHR Archetype Object Model 1.4 (ADL 1.4 Operational Templates)
+  conforms: true
+  evidence: >-
+    https://atomik.app/conformance ("Supports OPTs based on AOM 1.4"); the
+    getting-started page uploads a template via
+    POST /api/v1/definition/template/adl1.4 with Content-Type application/xml and
+    the http://schemas.openehr.org/v1 namespace.
+- id: saqm
+  name: SAQM (Simple Archetype Query Model)
+  conforms: true
+  published: false
+  evidence: >-
+    https://atomik.app/conformance - "Atomik implements SAQM (Simple Archetype Query
+    Model), a vendor-neutral query formalism designed specifically for portability
+    across CDR implementations." The same page says "The SAQM spec will be publicly
+    available" in the future tense. No public SAQM specification was found on
+    2026-09-02, so this is a conformance claim against a specification the market
+    cannot yet read.
+- id: aql
+  name: AQL (Archetype Query Language)
+  conforms: false
+  evidence: >-
+    Atomik deliberately does NOT lead with AQL. The conformance page argues that
+    "Most AQL implementations are technically spec-compliant but not truly portable
+    - the spec defines syntax, not execution semantics", and points to the openEHR
+    service layer formally supporting alternative query formalisms. Recorded as a
+    documented divergence, not a gap.
+- id: hl7-fhir
+  name: HL7 FHIR R4 / R5
+  conforms: partial
+  native: false
+  evidence: >-
+    https://atomik.app/documentation/integrations - "Atomik doesn't implement FHIR
+    natively, but the CaboLabs platform includes a FHIR Server facade that connects
+    to Atomik and enables bidirectional operations". The mapping layer is described
+    as adapted per customer to their specific openEHR templates and FHIR profiles,
+    explicitly "not a generic FHIR-to-openEHR converter". A buyer should read this
+    as a services engagement, not a shipped FHIR endpoint.
+- id: snomed-ct
+  name: SNOMED CT terminology services
+  conforms: true
+  evidence: >-
+    https://cabolabs.com/our_software/atomik/integrations - SNOMED CT terminology
+    services enabling semantic querying and expansion of SNOMED CT expressions. The
+    published EHRServer Insomnia collection wires terminology resolution to an
+    external service (snquery.veratech.es), i.e. terminology is a third-party
+    dependency rather than an in-product implementation.
+- id: hl7-v2
+  name: HL7 v2.x
+  conforms: partial
+  evidence: >-
+    Supported through an integration-engine approach (transformation only, via
+    Mirth Connect or equivalent), not as a native Atomik interface. CaboLabs
+    maintains a Mirth Connect fork and public example channels.
+- id: hl7-cda
+  name: HL7 CDA
+  conforms: false
+  evidence: >-
+    CDA appears as a CaboLabs consultancy and training offering
+    (https://cabolabs.com/services/consultancy/cda_implementation) and as an
+    open-source generator for its courses (github.com/ppazos/cabolabs-cda). It is
+    not a documented Atomik or EHRServer interface.
+- id: rfc9457
+  name: RFC 9457 Problem Details for HTTP APIs
+  conforms: false
+  evidence: >-
+    Neither API returns application/problem+json. EHRServer publishes a proprietary
+    dotted error-code registry (e01.0001 to e12.0004); Atomik publishes no error
+    catalogue.
+- id: oauth2-oidc
+  name: OAuth 2.0 / OpenID Connect
+  conforms: partial
+  evidence: >-
+    Not implemented by Atomik itself. https://atomik.app/documentation/security
+    documents delegating authentication entirely to an external identity provider
+    and recommends Keycloak for OAuth2/OIDC, RBAC, SSO and MFA. No authorization
+    server metadata is served on any CaboLabs host - every /.well-known/ probe on
+    2026-09-02 returned 404 (cabolabs.com) or an SPA shell (atomik.app).
+- id: dicom
+  name: DICOM
+  conforms: partial
+  evidence: >-
+    Not an Atomik interface. Delivered as separate open-source tooling - the
+    cabolabs-dicombroker Grails application for query/retrieve/send against PACS,
+    and CaboLabs/dicom-waveform for generating DICOM waveforms from raw ECG data.
+regulatory:
+  regime: healthcare
+  claims:
+  - regulation: HIPAA
+    citation: '45 CFR 164.312(b) - Audit controls'
+    claim: >-
+      "HIPAA 164.312(b) requires audit controls that record and examine activity in
+      systems containing PHI. Atomik's domain audit layer satisfies this requirement
+      out of the box - no custom logging infrastructure needed."
+    evidence: https://atomik.app/documentation/audit_and_logging
+    scope: >-
+      A single-control claim about the audit layer, made in the product
+      documentation. It is NOT a HIPAA attestation, a BAA, or a claim of
+      whole-product compliance.
+  - regulation: GDPR / right to be forgotten
+    claim: >-
+      The Administrative API family provides physical deletion "for maintenance or
+      regulatory requirements like the 'right to be forgotten'".
+    evidence: https://atomik.app/documentation/apis
+    scope: A capability statement, not a compliance certification.
+certifications:
+  found: none
+  note: >-
+    No SOC 2, ISO 27001, ISO 13485, HITRUST, PCI DSS, FedRAMP or CE/MDR
+    certification is published anywhere on cabolabs.com or atomik.app, and no trust
+    center exists (probe-security-programs.py returned trust=none on 2026-09-02).
+    Because there is no certification and no compliance program page, NO
+    `Compliance` pointer is emitted in apis.yml - the two regulatory statements
+    above are single-control claims in product documentation, and a Compliance
+    pointer would overstate them.
+conformance_tooling:
+  note: >-
+    CaboLabs publishes conformance TOOLING for the wider openEHR market, which is a
+    stronger signal than most conformance claims in this catalog - it is testable by
+    third parties.
+  artifacts:
+  - name: openehr-conformance-verification
+    url: https://github.com/ppazos/openehr-conformance-verification
+    description: >-
+      Conformance verification framework for openEHR implementations, shipping a
+      conformance testing specification with canonical JSON/XML datasets and
+      executable test suites.
+  - name: EHRServer openEHR Conformance report
+    url: https://github.com/ppazos/cabolabs-ehrserver/blob/master/docs/EHRServer_openEHR_Conformance_v1.1.pdf
+    description: >-
+      A published conformance document for EHRServer v1.1, committed to the
+      open-source repository. PDF only - not machine-readable.
+  - name: Atomik conformance tests
+    url: https://atomik.app/documentation/conformance_tests
+    description: >-
+      Listed in the Atomik documentation navigation under Testing. Probed
+      2026-09-02: HTTP 200, but the response is byte-identical in length (17,364) to
+      the sibling load-tests page, so both are placeholder pages with no published
+      content.

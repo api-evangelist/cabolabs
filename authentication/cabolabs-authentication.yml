@@ -1,0 +1,111 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  https://atomik.app/documentation/security and
+  https://atomik.app/documentation/getting_started (Atomik);
+  https://github.com/ppazos/cabolabs-ehrserver/wiki/API-error-codes-and-messages and
+  the published Insomnia collection api/EHRServer_2_0_API_Insomnia.json (EHRServer).
+  Read 2026-09-02.
+docs: https://atomik.app/documentation/security
+note: >-
+  Derived by SEARCH of the provider's own security and getting-started
+  documentation, not from an OpenAPI - CaboLabs publishes no machine-readable
+  contract, so there is no securitySchemes block to parse.
+apis:
+- api: Atomik openEHR REST API
+  schemes:
+  - id: atomik_jwt_bearer
+    type: http
+    scheme: bearer
+    bearer_format: JWT
+    in: header
+    header: Authorization
+    value_pattern: 'Authorization: Bearer {token}'
+    token_endpoint: POST /api/v1/auth
+    token_endpoint_note: >-
+      Documented two ways in CaboLabs' own docs, which disagree on how credentials
+      are passed. The security page and the getting-started curl both show
+      Content-Type application/x-www-form-urlencoded with email and password form
+      fields; the getting-started quick-start snippet at the top of the same page
+      shows them as QUERY STRING parameters
+      (POST /api/v1/auth?email=YOUR_EMAIL&password=YOUR_PASS). Recorded as
+      published - not reconciled, because the docs do not reconcile it.
+    token_response: '{"token":"eyJ..."}'
+    expiry: 24 hours by default, configurable to match the customer security policy
+    refresh: >-
+      No refresh-token flow is documented. On expiry the client re-authenticates
+      against POST /api/v1/auth for a fresh JWT.
+    applied_to: All API endpoints other than the auth endpoint itself.
+  - id: atomik_application_token
+    type: apiKey
+    in: header
+    header: Authorization
+    description: >-
+      Application-level access tokens for integrations with no human user - a
+      background service, a mobile app, or an integration engine. Created by an
+      Atomik administrator and configured in the external system. Atomik trusts the
+      token and DELEGATES user-level authorization to the calling application.
+      Any token is revocable instantly from the admin panel with no code change or
+      deployment.
+    revocation: instant, from the admin panel
+  - id: atomik_keycloak_oidc
+    type: openIdConnect
+    status: supported-integration
+    description: >-
+      Atomik can delegate authentication entirely to an external identity provider.
+      CaboLabs explicitly recommends Keycloak for self-hosted OAuth2/OIDC, RBAC,
+      SSO and MFA. No discovery document, issuer URL, scope list or client
+      registration procedure is published - the integration is scoped per
+      deployment, which is why scopes/ carries no artifact for this provider.
+  audit_headers:
+    note: >-
+      Atomik requires openEHR audit provenance on writes, carried in custom request
+      headers rather than the body. These are not authentication, but a write is
+      rejected without them, so an agent must send them.
+    headers:
+    - name: openEHR-AUDIT_DETAILS.committer
+      example: 'name="John Doe, MD", external_ref.id="BC8132EA-8F4A-11E7-BB31-BE2E44B06B35", external_ref.namespace="demographic", external_ref.type="PERSON"'
+      required: true
+    - name: openEHR-AUDIT_DETAILS.description
+      example: 'value="Created EHR by XYZ"'
+      required: false
+  console_auth:
+    method: username + password
+    optional_hardening:
+    - Google reCAPTCHA on the login form
+    - Two-factor authentication via TOTP mobile app
+    note: Both are described as "available on request", i.e. not on by default.
+  roles:
+  - role: Administrators
+    access: Full Web Console access - templates, queries, audit logs, system configuration.
+  - role: API users
+    access: REST API only, via the auth endpoint and a JWT.
+- api: CaboLabs EHRServer REST API
+  schemes:
+  - id: ehrserver_login_token
+    type: http
+    scheme: bearer
+    in: header
+    header: Authorization
+    token_endpoint: POST /rest/v1/auth
+    description: >-
+      EHRServer authenticates against a login endpoint that returns a token, in
+      JSON or XML (the published Insomnia collection carries both a "login JSON"
+      and a "login XML" request against /rest/v1/auth). Login is multi-tenant:
+      the documented 401 error codes e01.0006 through e01.0008 show that an
+      organization number is a required credential alongside username and password,
+      and that a user must be associated with the organization it names.
+    multi_tenant: true
+    organization_scoped: true
+  - id: ehrserver_sync_key
+    type: apiKey
+    description: >-
+      The synchronization endpoints under /sync are authenticated with a separate
+      scoped JWT (the published collection's development environment carries a
+      sync_key whose payload declares "scope":"sync"). Scoped to synchronization
+      only; not a general API credential.
+    scope: sync
+gaps:
+- No OAuth2 authorization-server metadata, no /.well-known/openid-configuration, and no published scope list on any CaboLabs host - every /.well-known/ probe on cabolabs.com returned 404 and every one on atomik.app returned an SPA shell.
+- No documented API-key prefix convention, no key-rotation policy, and no documented rate or lockout behaviour on repeated auth failure for Atomik.
+- Atomik's own docs give two different credential-passing shapes for the same POST /api/v1/auth call (form-encoded body vs query string); an integrator must try both.

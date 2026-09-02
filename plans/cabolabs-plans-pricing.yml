@@ -1,0 +1,93 @@
+generated: '2026-09-02'
+method: searched
+source: https://cabolabs.com/our_software/atomik/pricing
+docs: https://cabolabs.com/our_software/atomik/pricing
+plan_count: 3
+currency: null
+public_pricing: false
+self_serve: false
+free_tier: false
+note: >-
+  CaboLabs publishes three NAMED licensing tiers for Atomik but NO price, no
+  currency, no billing period, no included quota and no overage rate for any of
+  them. Every tier ends in the same call to action - "Talk to us about this option"
+  - and the page instead lists the four things CaboLabs will ask before quoting.
+  There is no sign-up, no self-serve trial and no published card price anywhere on
+  cabolabs.com or atomik.app, so plan_count is 3 by name and 0 by price. EHRServer
+  and the rest of the open-source estate (openEHR-SDK, openEHR-CLI, dicom-waveform)
+  are Apache-2.0 and carry no licence fee at all; they are recorded separately
+  below rather than as a free tier of Atomik, because they are different products.
+plans:
+- name: Self-Hosted
+  tagline: You deploy and operate
+  price: null
+  currency: null
+  billing_period: null
+  audience: Organizations that deploy and operate Atomik on their own infrastructure.
+  includes:
+  - The Atomik licence
+  - Access to updates, new releases and patches
+  - Documentation
+  - Deploy on-premises or on your own cloud
+  - Full control over data and environment
+  excludes:
+  - Support (support packages are available separately)
+  limits: none published
+  cta: Talk to us about this option
+- name: Managed Deployment
+  tagline: We deploy and operate
+  price: null
+  currency: null
+  billing_period: null
+  audience: Organizations that want Atomik deployed and maintained by CaboLabs.
+  includes:
+  - CaboLabs manages the environment
+  - Infrastructure and updates included
+  - Monitoring and health checks
+  - Initial configuration and onboarding support
+  limits: none published
+  cta: Talk to us about this option
+- name: Custom / OEM
+  tagline: Embed in your product
+  price: null
+  currency: null
+  billing_period: null
+  audience: Software companies that want to embed Atomik in their own product or service.
+  includes:
+  - Atomik under your product brand (white-labelling and custom branding)
+  - Commercial reseller arrangement
+  - Custom integration and adaptation support
+  - Volume licensing available
+  limits: none published
+  cta: Talk to us about this option
+quote_inputs:
+  note: The pricing page states the four dimensions CaboLabs asks about before quoting. These are the effective pricing axes, in the absence of a rate card.
+  dimensions:
+  - dimension: Deployment environment
+    detail: On-premises, cloud provider, or managed
+  - dimension: Expected data volume
+    detail: Number of EHRs, compositions per day
+  - dimension: Number of tenants
+    detail: Organizations sharing the instance
+  - dimension: Support requirements
+    detail: SLA, response time, integration help
+licence_only_products:
+- name: EHRServer
+  licence: Apache-2.0
+  price: 0
+  url: https://github.com/ppazos/cabolabs-ehrserver
+- name: openEHR-SDK
+  licence: Apache-2.0
+  price: 0
+  url: https://github.com/CaboLabs/openEHR-SDK
+- name: openEHR-CLI
+  licence: Apache-2.0
+  price: 0
+  url: https://github.com/CaboLabs/openEHR-CLI
+licensing_modes:
+  note: >-
+    The getting-started documentation refers to "DEV or PROD" licence credentials
+    and offers a "Development license" separately from production, which is the
+    closest thing to a trial tier CaboLabs publishes. It is still gated behind
+    "Contact us". See sandbox/cabolabs-sandbox.yml.
+  modes: [DEV, PROD]

@@ -1,0 +1,355 @@
+generated: '2026-09-02'
+method: searched
+source: https://github.com/ppazos/cabolabs-ehrserver/wiki/API-error-codes-and-messages
+api: CaboLabs EHRServer REST API
+format: proprietary
+rfc9457: false
+note: 'The EHRServer project publishes a real, structured error-code registry on its GitHub wiki: a dotted
+  code (e<group>.<number>), the condition that raises it, and the HTTP status returned. It is NOT RFC
+  9457 - responses are not application/problem+json and there is no type URI. The registry is also visibly
+  unfinished by its authors'' own marking: the /commit and /checkout groups carry the code prefix ''e02.''
+  and ''e03.'' with no number assigned, and the Message column is empty for every single row, so a client
+  can map a code to a cause but cannot render a provider-authored message. Two rows carry the authors''
+  own corrections in-line, noting a status that should be 401 rather than 400. Recorded verbatim rather
+  than tidied - the gaps are the finding.
+
+  IMPORTANT SCOPE: this catalogue covers EHRServer ONLY. Atomik, the commercial product, publishes no
+  error catalogue at all; its documentation describes error behaviour only in prose.'
+envelope:
+  documented: false
+  note: No error response body schema is published; the Message column of the registry is empty throughout.
+code_scheme:
+  pattern: e<NN>.<NNNN>
+  groups:
+    e01: /login - authentication and organization association
+    e02: /commit - clinical data commit (code numbers unassigned)
+    e03: /checkout - composition checkout (code numbers unassigned)
+    e04: /ehrs - EHR collection
+    e05: /ehrs/subjectUid/$subjectUid - EHR by patient
+    e06: /ehrs/ehrUid/$ehrUid - EHR by uid
+    e07: /patients - patient collection
+    e08: /patients/$uid - patient by uid
+    e09: /queries/$queryUid - query by uid
+    e10: /queries/$queryUid/execute - query execution
+    e11: /queries - query collection
+    e12: /contributions - contribution collection
+  convention: The suffix .0066 is reused across groups for "requested output format is not supported".
+problem_types:
+- code: e01.0001
+  operation: /login
+  condition: no record for provided username
+  http_status: 401
+  http_phrase: Unauthorized
+- code: e01.0002
+  operation: /login
+  condition: user disabled
+  http_status: 401
+  http_phrase: Unauthorized
+- code: e01.0003
+  operation: /login
+  condition: user account expired
+  http_status: 401
+  http_phrase: Unauthorized
+- code: e01.0004
+  operation: /login
+  condition: user account locked
+  http_status: 401
+  http_phrase: Unauthorized
+- code: e01.0005
+  operation: /login
+  condition: provided password don't match
+  http_status: 401
+  http_phrase: Unauthorized
+- code: e01.0006
+  operation: /login
+  condition: no organization number provided
+  http_status: 401
+  http_phrase: Unauthorized
+- code: e01.0007
+  operation: /login
+  condition: organization with number provided doesn't exists
+  http_status: 401
+  http_phrase: Unauthorized
+- code: e01.0008
+  operation: /login
+  condition: organization not associated with user
+  http_status: 401
+  http_phrase: Unauthorized
+- code: e02
+  operation: /commit
+  condition: ehrUid not provided
+  http_status: 400
+  http_phrase: Bad Request
+  code_incomplete: true
+- code: e02
+  operation: /commit
+  condition: auditSystemId not provided
+  http_status: 400
+  http_phrase: Bad Request
+  code_incomplete: true
+- code: e02
+  operation: /commit
+  condition: auditCommitter not provided
+  http_status: 400
+  http_phrase: Bad Request
+  code_incomplete: true
+- code: e02
+  operation: /commit
+  condition: no EHR found for the provided ehrUid
+  http_status: 400
+  http_phrase: Bad Request
+  code_incomplete: true
+- code: e02
+  operation: /commit
+  condition: user can't access the EHR, it belongs to an organization not associated with the user
+  http_status: 400
+  http_phrase: Bad Request (FIX to 401 Unauthorized)
+  code_incomplete: true
+  provider_note: FIX to 401 Unauthorized
+- code: e02
+  operation: /commit
+  condition: request body is empty or versions XML element not found
+  http_status: 400
+  http_phrase: Bad Request
+  code_incomplete: true
+- code: e02
+  operation: /commit
+  condition: parsed versions is empty (error during parsing)
+  http_status: 400
+  http_phrase: Bad Request
+  code_incomplete: true
+- code: e02
+  operation: /commit
+  condition: parsed versions root node is empty (error accessing the root version element)
+  http_status: 400
+  http_phrase: Bad Request
+  code_incomplete: true
+- code: e02
+  operation: /commit
+  condition: some parsed versions failed XSD validation
+  http_status: 400
+  http_phrase: Bad Request
+  code_incomplete: true
+- code: e02
+  operation: /commit
+  condition: other generic error related to processing the parsed versions/compositions
+  http_status: 400
+  http_phrase: Bad Request
+  code_incomplete: true
+  provider_note: 'TODO: specify the internal errors: duplicated file name, folder doesnt exists, cant
+    write to folder, etc. make RUntimeExceptions for everything see #282'
+- code: e03
+  operation: /checkout
+  condition: ehrUid not provided
+  http_status: 400
+  http_phrase: Bad Request
+  code_incomplete: true
+- code: e03
+  operation: /checkout
+  condition: compositionUid not provided
+  http_status: 400
+  http_phrase: Bad Request
+  code_incomplete: true
+- code: e03
+  operation: /checkout
+  condition: user can't access the EHR that contains the composition, because it belongs to an organization
+    not associated with the user
+  http_status: 401
+  http_phrase: Unauthorized
+  code_incomplete: true
+- code: e03
+  operation: /checkout
+  condition: no versions found for the compositionUid
+  http_status: 404
+  http_phrase: Not Found
+  code_incomplete: true
+- code: e03
+  operation: /checkout
+  condition: the requested composition is not the latest version
+  http_status: 400
+  http_phrase: Bad Request
+  code_incomplete: true
+- code: e03
+  operation: /checkout
+  condition: the requested composition is not the latest version
+  http_status: 500
+  http_phrase: Internal Server Error
+  code_incomplete: true
+- code: e04.0066
+  operation: /ehrs
+  condition: requested output format is not supported
+  http_status: 400
+  http_phrase: Bad Request
+- code: e05.0001
+  operation: /ehrs/subjectUid/$subjectUid
+  condition: subjectUid not provided
+  http_status: 400
+  http_phrase: Bad Request
+- code: e05.0002
+  operation: /ehrs/subjectUid/$subjectUid
+  condition: patient doesn't exists
+  http_status: 404
+  http_phrase: Not Found
+- code: e05.0003
+  operation: /ehrs/subjectUid/$subjectUid
+  condition: user can't access the patient, because it belongs to an organization not associated with
+    the user
+  http_status: 401
+  http_phrase: Unauthorized
+- code: e05.0004
+  operation: /ehrs/subjectUid/$subjectUid
+  condition: the patient doesn't have an EHR
+  http_status: 404
+  http_phrase: Not Found
+- code: e05.0066
+  operation: /ehrs/subjectUid/$subjectUid
+  condition: requested output format is not supported
+  http_status: 400
+  http_phrase: Bad Request
+- code: e06.0006
+  operation: /ehrs/ehrUid/$ehrUid
+  condition: ehrUid not provided
+  http_status: 400
+  http_phrase: Bad Request
+- code: e06.0007
+  operation: /ehrs/ehrUid/$ehrUid
+  condition: the EHR doesn't exists
+  http_status: 404
+  http_phrase: Not Found
+- code: e06.0008
+  operation: /ehrs/ehrUid/$ehrUid
+  condition: user can't access the EHR, because it belongs to an organization not associated with the
+    user
+  http_status: 401
+  http_phrase: Unauthorized
+- code: e06.0066
+  operation: /ehrs/ehrUid/$ehrUid
+  condition: requested output format is not supported
+  http_status: 400
+  http_phrase: Bad Request
+- code: e07.0066
+  operation: /patients
+  condition: requested output format is not supported
+  http_status: 400
+  http_phrase: Bad Request
+- code: e08.0001
+  operation: /patients/$uid
+  condition: uid not provided
+  http_status: 400
+  http_phrase: Bad Request
+- code: e08.0002
+  operation: /patients/$uid
+  condition: patient not found
+  http_status: 404
+  http_phrase: Not Found
+- code: e08.0066
+  operation: /patients/$uid
+  condition: requested output format is not supported
+  http_status: 400
+  http_phrase: Bad Request
+- code: e09.0001
+  operation: /queries/$queryUid
+  condition: queryUid not provided
+  http_status: 400
+  http_phrase: Bad Request
+- code: e09.0002
+  operation: /queries/$queryUid
+  condition: query not found
+  http_status: 404
+  http_phrase: Not Found
+- code: e09.0066
+  operation: /queries/$queryUid
+  condition: requested output format is not supported
+  http_status: 400
+  http_phrase: Bad Request
+- code: e10.0005
+  operation: /queries/$queryUid/execute
+  condition: queryUid not provided
+  http_status: 400
+  http_phrase: Bad Request
+- code: e10.0006
+  operation: /queries/$queryUid/execute
+  condition: organizationUid not provided
+  http_status: 400
+  http_phrase: Bad Request (To Be Changed)
+  provider_note: To Be Changed
+- code: e10.0007
+  operation: /queries/$queryUid/execute
+  condition: ehrUid provided but an EHR doesn't exists for it
+  http_status: 404
+  http_phrase: Not Found
+- code: e10.0008
+  operation: /queries/$queryUid/execute
+  condition: the user doesn't have permissions to query the EHR
+  http_status: 401
+  http_phrase: Unauthorized
+- code: e10.0009
+  operation: /queries/$queryUid/execute
+  condition: query doesn't exists for the given queryUid
+  http_status: 404
+  http_phrase: Not Found
+- code: e10.0010
+  operation: /queries/$queryUid/execute
+  condition: fromDate given but has an invalid format
+  http_status: 400
+  http_phrase: Bad Request
+- code: e10.0011
+  operation: /queries/$queryUid/execute
+  condition: toDate given but has an invalid format
+  http_status: 400
+  http_phrase: Bad Request
+- code: e10.0012
+  operation: /queries/$queryUid/execute
+  condition: fromDate and toDate filters are present but fromDate is greater than toDate
+  http_status: 400
+  http_phrase: Bad Request
+- code: e10.0013
+  operation: /queries/$queryUid/execute
+  condition: given group not supported
+  http_status: 400
+  http_phrase: Bad Request
+- code: e10.0014
+  operation: /queries/$queryUid/execute
+  condition: query doesn't exists for the given queryUid
+  http_status: 404
+  http_phrase: Not Found
+- code: e10.0066
+  operation: /queries/$queryUid/execute
+  condition: requested output format is not supported
+  http_status: 400
+  http_phrase: Bad Request
+- code: e11.0066
+  operation: /queries
+  condition: requested output format is not supported
+  http_status: 400
+  http_phrase: Bad Request
+- code: e12.0066
+  operation: /contributions
+  condition: requested output format is not supported
+  http_status: 400
+  http_phrase: Bad Request
+- code: e12.0001
+  operation: /contributions
+  condition: from date not parsable
+  http_status: 400
+  http_phrase: Bad Request
+- code: e12.0002
+  operation: /contributions
+  condition: to date not parsable
+  http_status: 400
+  http_phrase: Bad Request
+- code: e12.0003
+  operation: /contributions
+  condition: from and to date filters are present but from is greater than to
+  http_status: 400
+  http_phrase: Bad Request
+- code: e12.0004
+  operation: /contributions
+  condition: user can't access the EHR with uid = $ehrUid
+  http_status: 400
+  http_phrase: Bad Request
+error_count: 58
+atomik:
+  catalogue_published: false
+  note: Atomik publishes no error-code reference. The only documented error behaviour is that requests
+    with expired tokens receive an error response and the client re-authenticates.

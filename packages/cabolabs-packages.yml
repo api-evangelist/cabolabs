@@ -1,0 +1,137 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  GitHub org github.com/CaboLabs and github.com/ppazos release/tag metadata via the
+  GitHub API, cross-checked against registry.npmjs.org, search.maven.org,
+  packagist.org and pypi.org, 2026-09-02.
+note: >-
+  CaboLabs publishes NO package to any public language registry. Searches of npm
+  ("cabolabs", "ehrserver"), Maven Central ("cabolabs", g:com.cabolabs), Packagist
+  ("cabolabs") and PyPI all returned zero first-party results, and the openEHR-SDK
+  README documents Gradle source builds only ("gradle clean build") with no
+  publish/coordinates section. Every package below is therefore distributed as
+  source or as a GitHub release artifact, so `registry: github` and the `version` /
+  `published` fields are read from the GitHub release metadata rather than a
+  registry metadata endpoint. This is the abandonment-signal caveat in reverse: the
+  two flagship libraries are the MOST current things CaboLabs ships (openEHR-SDK
+  2.5.2 released 2026-08-20, thirteen days before this probe), but a JVM consumer
+  cannot `implementation 'com.cabolabs:openehr-sdk:2.5.2'` — they must build it.
+packages:
+- name: openEHR-SDK
+  language: Groovy/Java (JVM)
+  registry: github
+  official: true
+  version: 2.5.2
+  published: '2026-08-20'
+  url: https://github.com/CaboLabs/openEHR-SDK
+  license: Apache-2.0
+  install: 'gradle clean build (source build; no published Maven coordinates)'
+  note: >-
+    Flagship first-party library. openEHR Operational Template parsing, Reference
+    Model, JSON/XML parsers and serializers, instance validation and data
+    generators. Used inside EHRServer, EHRGen, EMRApp and the XML Rule Engine.
+    Requires Java 8+ and Groovy 2.5.5+.
+- name: openEHR-CLI
+  language: Groovy/Java (JVM)
+  registry: github
+  official: true
+  version: 1.2.1
+  published: '2026-08-04'
+  url: https://github.com/CaboLabs/openEHR-CLI
+  license: Apache-2.0
+  install: './gradlew installDist  # binary at app/build/install/openehr/bin/openehr'
+  note: >-
+    First-party CLI over the SDK; also ships the CaboLabs MCP server in
+    mcp_server/. Catalogued in full at cli/cabolabs-cli.yml.
+- name: cabolabs-ehrserver-js
+  language: JavaScript
+  registry: github
+  official: true
+  version: null
+  published: null
+  url: https://github.com/ppazos/cabolabs-ehrserver-js
+  license: null
+  install: 'clone / vendor the source; not published to npm'
+  note: >-
+    JavaScript client for the EHRServer REST API. version/published are null
+    because the repository carries no tag or release and the package is absent
+    from npm - checked, nothing to record. Last pushed 2023-09-15.
+- name: cabolabs-ehrserver-groovy
+  language: Groovy
+  registry: github
+  official: true
+  version: null
+  published: null
+  url: https://github.com/ppazos/cabolabs-ehrserver-groovy
+  license: null
+  install: 'clone / vendor the source; no published coordinates'
+  note: >-
+    Groovy client for the CaboLabs openEHR EHRServer. No tag or release; absent
+    from Maven Central. Last pushed 2018-05-09 - stale relative to EHRServer v2.3.
+- name: EHRClientPHP
+  language: PHP
+  registry: github
+  official: true
+  version: null
+  published: null
+  url: https://github.com/ppazos/EHRClientPHP
+  license: null
+  install: 'clone / vendor the source; not published to Packagist'
+  note: >-
+    EHRServer client in PHP. No tag or release; a Packagist search for "cabolabs"
+    returns only unrelated vendors. Last pushed 2019-06-25.
+- name: openehr-rest-client
+  language: Groovy (JVM)
+  registry: github
+  official: true
+  version: null
+  published: null
+  url: https://github.com/ppazos/openehr-rest-client
+  license: null
+  install: 'clone / vendor the source; no published coordinates'
+  note: >-
+    openEHR Reference REST API client for the JVM. No tag or release, but the most
+    recently touched client in the estate (pushed 2026-09-02, the day of this probe),
+    so it is active development rather than an abandoned library.
+- name: openehr-conformance-verification
+  language: Groovy (JVM)
+  registry: github
+  official: true
+  version: null
+  published: null
+  url: https://github.com/ppazos/openehr-conformance-verification
+  license: null
+  install: 'clone / vendor the source; no published coordinates'
+  note: >-
+    Conformance verification framework for openEHR implementations, carrying the
+    conformance test suites and canonical JSON datasets. No tag or release.
+    Last pushed 2024-03-24.
+- name: dicom-waveform
+  language: Java
+  registry: github
+  official: true
+  version: null
+  published: null
+  url: https://github.com/CaboLabs/dicom-waveform
+  license: Apache-2.0
+  install: 'clone / vendor the source; no published coordinates'
+  note: >-
+    DICOM Waveform generator from raw ECG data. No tag or release.
+    Last pushed 2024-04-16.
+registries_checked:
+- registry: npm
+  query: cabolabs
+  results: 0
+- registry: npm
+  query: ehrserver
+  results: 0
+- registry: maven-central
+  query: cabolabs
+  results: 0
+- registry: packagist
+  query: cabolabs
+  results: 0
+  note: 10 results returned, none first-party (cocolabs, colabs, cablelabs, carrlabs...)
+- registry: pypi
+  query: cabolabs
+  results: 0

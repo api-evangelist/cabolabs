@@ -1,0 +1,156 @@
+# CaboLabs
+
+> CaboLabs is a health informatics company specializing in standards and interoperability. We help healthcare organizations and technology vendors build, assess, buy, improve, audit, and integrate Health Information Systems using international standards: openEHR, HL7 FHIR, HL7 v2.x, CDA, and DICOM.
+
+Founded in 2012. Based in Uruguay, serving clients worldwide. Languages: English and Spanish.
+
+## Company
+
+- [About CaboLabs](https://cabolabs.com/company): Who we are, our mission, our team, and our expertise in health informatics standards.
+- [Founder](https://cabolabs.com/founder): Pablo Pazos Gutierrez — health informatician, openEHR expert, software architect.
+
+## Services
+
+- [Services Overview](https://cabolabs.com/services): Professional services for startups, vendors, and hospitals in health informatics.
+- [Services for Startups](https://cabolabs.com/services/for-startups): Helping health tech startups design interoperable systems from the ground up.
+- [Services for Vendors](https://cabolabs.com/services/for-vendors): Helping software vendors add standards compliance to their products.
+- [Services for Hospitals](https://cabolabs.com/services/for-hospitals): Helping healthcare organizations improve their information systems.
+
+### Consultancy
+
+- [Standards Consultancy](https://cabolabs.com/services/consultancy/standards): Guidance on HL7, FHIR, openEHR, CDA, and DICOM adoption.
+- [HIS Architecture](https://cabolabs.com/services/consultancy/his_architecture): Architecture design for Health Information Systems.
+- [HIS Integration](https://cabolabs.com/services/consultancy/his_integration): Integration of clinical systems using standard protocols.
+- [Clinical Repository Design](https://cabolabs.com/services/consultancy/database_design): Design of openEHR-based clinical data repositories.
+- [Clinical Repository Audit](https://cabolabs.com/services/consultancy/database_audit): Assessment and audit of clinical data repositories.
+- [Data Mapping](https://cabolabs.com/services/consultancy/data_mapping): Mapping clinical data between different models and standards.
+- [API Design](https://cabolabs.com/services/consultancy/api_design): Design of health APIs using REST and FHIR patterns.
+- [openEHR Archetypes and Templates](https://cabolabs.com/services/consultancy/design_openehr_archetypes_and_templates): Design of openEHR archetypes and templates for clinical data modeling.
+- [CDA Implementation](https://cabolabs.com/services/consultancy/cda_implementation): Implementation of HL7 CDA clinical documents.
+- [HL7 v2.x Implementation](https://cabolabs.com/services/consultancy/hl7v2x_implementation): Implementation of HL7 v2.x messaging.
+- [openEHR Implementation](https://cabolabs.com/services/consultancy/openehr_implementation): End-to-end openEHR implementation services.
+
+## Software
+
+- [Software Overview](https://cabolabs.com/our_software): Our suite of health informatics software products.
+
+### Atomik
+
+- [Atomik](https://cabolabs.com/our_software/atomik): openEHR-based clinical data repository — the foundation for standards-based EHR systems.
+- [Atomik Features](https://cabolabs.com/our_software/atomik/features): Full feature list for the Atomik platform.
+- [Atomik Architecture](https://cabolabs.com/our_software/atomik/architecture): Technical architecture of Atomik.
+- [Atomik Integrations](https://cabolabs.com/our_software/atomik/integrations): Integration options for Atomik (FHIR facade, HL7, REST).
+- [Atomik Pricing](https://cabolabs.com/our_software/atomik/pricing): Pricing and licensing options for Atomik.
+- [Atomik Documentation](https://cabolabs.com/our_software/atomik/documentation): Technical documentation for Atomik.
+- [Atomik Training](https://cabolabs.com/our_software/atomik/training): Training options for using and administering Atomik.
+- [Atomik FAQ](https://cabolabs.com/our_software/atomik/faq): Frequently asked questions about Atomik.
+
+### openEHR Toolkit
+
+- [openEHR Toolkit](https://cabolabs.com/our_software/toolkit): Open-source tools for working with openEHR artifacts (archetypes, templates, instances).
+- [Toolkit Features](https://cabolabs.com/our_software/toolkit/features): Feature list for the openEHR Toolkit.
+- [Toolkit Download](https://cabolabs.com/our_software/toolkit/download): Download and installation instructions.
+- [Toolkit FAQ](https://cabolabs.com/our_software/toolkit/faq): Frequently asked questions about the openEHR Toolkit.
+
+### Nora
+
+- [Nora](https://cabolabs.com/our_software/nora): openEHR archetype and template designer — visual clinical modeling tool.
+- [Nora Features](https://cabolabs.com/our_software/nora/features): Feature list for Nora.
+- [Nora Examples](https://cabolabs.com/our_software/nora/examples): Example archetypes and templates created with Nora.
+- [Nora FAQ](https://cabolabs.com/our_software/nora/faq): Frequently asked questions about Nora.
+
+### Other Software
+
+- [EHRServer](https://cabolabs.com/our_software/ehrserver): Open-source openEHR clinical data repository.
+- [openEHR SDK](https://cabolabs.com/our_software/openehr-sdk): Software development kit for openEHR in multiple languages.
+- [REST Client](https://cabolabs.com/our_software/rest-client): REST client tool for health APIs.
+- [Conformance](https://cabolabs.com/our_software/conformance): openEHR conformance testing tool.
+- [DICOM Broker](https://cabolabs.com/our_software/dicom-broker): DICOM integration broker.
+- [DICOM Waveform](https://cabolabs.com/our_software/dicom-waveform): DICOM waveform viewer.
+- [Debbie](https://cabolabs.com/our_software/debbie): Clinical database audit tool.
+- [Bootstrap EMR](https://cabolabs.com/our_software/bootstrap-emr): Starter kit for EMR development.
+- [PHersistence](https://cabolabs.com/our_software/phersistence): Persistence layer for openEHR data.
+
+## Education
+
+- [Education Overview](https://cabolabs.com/education): Training programs in health informatics standards and interoperability.
+- [Intro to FHIR](https://cabolabs.com/education/intro_fhir): Introduction to HL7 FHIR — concepts, resources, and REST API.
+- [FHIR Server](https://cabolabs.com/education/fhir_server): Hands-on training with FHIR server setup and configuration.
+- [Mirth Connect](https://cabolabs.com/education/mirth): Integration engine training using Mirth Connect.
+- [Clinical Programming](https://cabolabs.com/education/programming): Programming for health informatics applications.
+- [openEHR Master Class](https://cabolabs.com/education/openehr_master_class): Advanced openEHR training for practitioners.
+- [Clinical Data Modeling](https://cabolabs.com/education/modeling): openEHR archetype and template design.
+- [Interoperability](https://cabolabs.com/education/interoperability): Health system interoperability standards and patterns.
+- [openEHR Fundamentals](https://cabolabs.com/education/openehr): Introduction to openEHR concepts and ecosystem.
+- [Clinical Databases](https://cabolabs.com/education/clinical_databases): Design and management of clinical databases.
+- [Usability in Health IT](https://cabolabs.com/education/usability): UX and usability principles for healthcare software.
+- [HIS Implementation](https://cabolabs.com/education/his_implementation): Health information system implementation with openEHR.
+- [HIS Architecture](https://cabolabs.com/education/his_architecture): Architectural patterns for health information systems.
+- [EHRServer Workshop](https://cabolabs.com/education/ehrserver): Hands-on EHRServer implementation workshop.
+- [CDA Workshop](https://cabolabs.com/education/cda): Design and implementation of HL7 CDA clinical documents.
+- [REST APIs for Health](https://cabolabs.com/education/rest_apis): Building and consuming REST APIs in health informatics.
+
+## Insights
+
+Insights are in-depth articles on health informatics topics written by CaboLabs experts.
+
+- [Insights Hub](https://cabolabs.com/insights): Index of all insights articles.
+
+### FHIR
+
+- [FHIR Profiles](https://cabolabs.com/insights/fhir/fhir-profiles): What FHIR profiles are and how to create them.
+- [FHIR Implementation Guides](https://cabolabs.com/insights/fhir/fhir-implementation-guides): How FHIR implementation guides work and how to use them.
+- [SMART on FHIR](https://cabolabs.com/insights/fhir/smart-on-fhir): OAuth2-based authorization framework for FHIR apps.
+- [FHIR Terminology](https://cabolabs.com/insights/fhir/fhir-terminology): Code systems, value sets, and concept maps in FHIR.
+- [FHIR Validation](https://cabolabs.com/insights/fhir/fhir-validation): Validating FHIR resources against profiles and IGs.
+- [HAPI FHIR Server](https://cabolabs.com/insights/fhir/hapi-fhir-server): Guide to setting up and using the HAPI FHIR server.
+- [FSH Language](https://cabolabs.com/insights/fhir/fsh-language): FHIR Shorthand (FSH) language for authoring FHIR artifacts.
+
+### openEHR
+
+- [What is openEHR?](https://cabolabs.com/insights/openehr/what-is-openehr): Introduction to the openEHR standard and its key concepts.
+- [openEHR Archetypes](https://cabolabs.com/insights/openehr/openehr-archetypes): What openEHR archetypes are, how they work, and how to use them.
+- [openEHR Templates](https://cabolabs.com/insights/openehr/openehr-templates): How openEHR templates compose archetypes into clinical forms.
+- [AQL Guide](https://cabolabs.com/insights/openehr/aql-guide): Introduction to Archetype Query Language (AQL) for querying openEHR data.
+- [AQL Queries](https://cabolabs.com/insights/openehr/aql-queries): Practical AQL query examples for common clinical data retrieval scenarios.
+- [CDR Architecture](https://cabolabs.com/insights/openehr/cdr-architecture): Architecture of openEHR-based Clinical Data Repositories.
+- [openEHR vs FHIR](https://cabolabs.com/insights/openehr/openehr-vs-fhir): Comparison of openEHR and HL7 FHIR — when to use each.
+
+### Interoperability
+
+- [What is Interoperability?](https://cabolabs.com/insights/interoperability/what-is-interoperability): Levels and types of health data interoperability.
+- [HL7 vs FHIR](https://cabolabs.com/insights/interoperability/hl7-vs-fhir): Differences between HL7 v2.x messaging and HL7 FHIR.
+- [Integration Patterns](https://cabolabs.com/insights/interoperability/integration-patterns): Common patterns for health system integration.
+- [Integration Costs](https://cabolabs.com/insights/interoperability/integration-costs): Understanding and estimating health integration project costs.
+- [Integration Architecture](https://cabolabs.com/insights/interoperability/integration-architecture): Enterprise integration architecture for healthcare organizations.
+
+### Clinical Data Repositories (CDR)
+
+- [Why Use a CDR?](https://cabolabs.com/insights/cdr/why-use-cdr): The case for adopting a Clinical Data Repository.
+- [CDR vs EHR](https://cabolabs.com/insights/cdr/cdr-vs-ehr): How a CDR differs from a traditional EHR system.
+- [Longitudinal Records](https://cabolabs.com/insights/cdr/longitudinal-records): Building longitudinal patient records in a CDR.
+- [Secondary Use of Data](https://cabolabs.com/insights/cdr/secondary-use): Using clinical data for research, analytics, and public health.
+- [AI-Ready Clinical Data](https://cabolabs.com/insights/cdr/ai-ready-data): Structuring clinical data for AI and machine learning applications.
+
+### Procurement
+
+- [EHR Selection Checklist](https://cabolabs.com/insights/procurement/ehr-selection-checklist): A practical checklist for selecting an EHR system.
+- [Vendor Questions](https://cabolabs.com/insights/procurement/vendor-questions): Key questions to ask health IT vendors before buying.
+- [Avoiding Vendor Lock-in](https://cabolabs.com/insights/procurement/vendor-lock-in): Strategies to avoid proprietary lock-in when buying health software.
+- [Build vs Buy](https://cabolabs.com/insights/procurement/build-vs-buy): When to build custom health software vs buy commercial solutions.
+- [Procurement Mistakes](https://cabolabs.com/insights/procurement/procurement-mistakes): Common mistakes in health software procurement and how to avoid them.
+
+### Audits
+
+- [What to Audit](https://cabolabs.com/insights/audits/what-to-audit): A guide to what should be audited in health information systems.
+- [Integration Assessment](https://cabolabs.com/insights/audits/integration-assessment): How to assess the quality and risk of existing health integrations.
+- [Data Quality](https://cabolabs.com/insights/audits/data-quality): Evaluating and improving clinical data quality.
+- [Standards Compliance](https://cabolabs.com/insights/audits/standards-compliance): Assessing compliance with health informatics standards.
+- [Security Review](https://cabolabs.com/insights/audits/security-review): Security review considerations for health information systems.
+
+## Contact
+
+- Email: info@cabolabs.com
+- Website: https://cabolabs.com
+- LinkedIn: https://www.linkedin.com/company/cabolabs
+- GitHub: https://github.com/ppazos

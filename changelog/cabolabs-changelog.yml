@@ -1,0 +1,115 @@
+generated: '2026-09-02'
+method: searched
+source: https://atomik.app/documentation/news
+docs: https://atomik.app/documentation/news
+api: Atomik openEHR REST API
+scheme: month-dated prose entries (no semantic version numbers, no per-entry permalink)
+current_version: null
+note: >-
+  Atomik maintains a dated news/changelog page. It is real and month-granular, but
+  it is NOT versioned - no release number is attached to any entry, so a consumer
+  cannot say which Atomik build contains a given fix. Entries are also not labelled
+  breaking vs additive; the classification below is API Evangelist's reading of the
+  published text, not the provider's. The most recent entry on 2026-09-02 was
+  November 2025, so the page had been quiet for roughly nine months at the time of
+  this probe. EHRServer, the open-source product, has GitHub releases instead
+  (latest v2.3, 2020-09-06) and no changelog page.
+entries:
+- date: '2025-11'
+  breaking: false
+  additions: false
+  highlights:
+  - Fixed bug with the query importer.
+  - Fixed bug with the resolveRefs parameter for query execution.
+- date: '2025-10'
+  breaking: false
+  additions: true
+  highlights:
+  - Added attestation (electronic signature) indexing.
+  - Query Builder now excludes flags automatically (e.g. 'retrieve data' set false when the query has projections).
+  - Fixed the query generator for string criteria that produced incorrect SQL.
+  - Improved support for the 'resolve refs' flag.
+- date: '2025-09'
+  breaking: false
+  additions: true
+  highlights:
+  - Fixed data commits that validated against deleted templates.
+  - Fixed the days_ahead query function with a BETWEEN condition.
+  - Improved query results with additional metadata.
+  - Improved the API endpoint that returns server status.
+  - Fixed queries using duration conditions and template XML rendering.
+- date: '2025-08'
+  breaking: false
+  additions: true
+  highlights:
+  - Query builder/generator fixes including terminology ID resolution from the template.
+  - Added missing database indexes.
+  - Added fulltext search and improved partial string matching.
+- date: '2025-07'
+  breaking: false
+  additions: false
+  highlights:
+  - Several improvements to the Web Console.
+- date: '2025-06'
+  breaking: true
+  additions: false
+  highlights:
+  - >-
+    Dropped XML support for the APIs, moving to a JSON-only API. The Operational
+    Template API is the only remaining XML surface and is stated as due for removal
+    "to have a 100% JSON API".
+  breaking_note: >-
+    This is the one unambiguously breaking change on the page - an entire
+    representation was withdrawn from every API. It was announced in the same prose
+    changelog as bug fixes, with no deprecation notice period, no Sunset header, and
+    no migration guide, and it also PRE-ANNOUNCES a second breaking change (removal
+    of XML from the Operational Template API) with no date attached.
+- date: '2025-05'
+  breaking: false
+  additions: true
+  highlights:
+  - >-
+    Added configuration for the 'delete ACTOR' service, allowing automatic deletion
+    of relationships and roles assigned to a deleted ACTOR.
+- date: '2025-04'
+  breaking: false
+  additions: true
+  highlights:
+  - Added an independent API for ROLEs, improving management of roles for demographic entities.
+- date: '2025-03'
+  breaking: false
+  additions: true
+  highlights:
+  - >-
+    Completed the rewrite of the querying module - new query model, modularized
+    Query Builder, JSON query serializer and parser, and alternative HQL generation
+    strategies for query performance.
+- date: '2024-11'
+  breaking: false
+  additions: true
+  highlights:
+  - Added query functions to search for "time ahead" on date/date-time data points.
+- date: '2023-04'
+  breaking: false
+  additions: true
+  highlights:
+  - Support for PARTY_RELATIONSHIPs added.
+  - New website and documentation published.
+- date: '2023-03'
+  breaking: false
+  additions: true
+  highlights:
+  - >-
+    Support for storing and querying demographic PARTY classes added - PERSON,
+    ORGANIZATION, GROUP, AGENT and ROLE.
+- date: '2023-01'
+  breaking: false
+  additions: false
+  highlights:
+  - Atomik updated to Grails 5.3.2 and JDK 11 (from Grails 3.3.16 and JDK 8).
+entry_count: 13
+gaps:
+- No version number, tag, or permalink on any entry.
+- No RSS/Atom feed and no machine-readable changelog format.
+- No separation of breaking changes from fixes; the June 2025 XML removal sits in the same undifferentiated list as a Web Console tweak.
+- No entry after November 2025 as of the 2026-09-02 probe.

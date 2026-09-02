@@ -1,0 +1,53 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  https://atomik.app/documentation/apis, /documentation/security,
+  /documentation/getting_started, /documentation/queries;
+  https://cabolabs.com/our_software/atomik/pricing;
+  https://github.com/ppazos/cabolabs-ehrserver/wiki/API-error-codes-and-messages.
+  Searched 2026-09-02.
+limit_count: 0
+headers_documented: false
+status_on_exhaustion: null
+retry_after: false
+note: >-
+  CaboLabs publishes NO rate limits for either API. There is no quota, no burst
+  allowance, no per-key or per-account ceiling, no 429 behaviour, and no
+  X-RateLimit-* / RateLimit-* / Retry-After response header documented anywhere on
+  atomik.app or cabolabs.com. The EHRServer error-code registry - the only complete
+  status-code mapping either product publishes - contains no 429 row at all, across
+  all 58 documented conditions, which corroborates that throttling is not part of
+  the contract. An honest zero, and a structural one: both products are deployed
+  per customer (Atomik as a licensed instance, EHRServer self-hosted), so capacity
+  is whatever the operator provisions rather than a shared quota the vendor meters.
+  The consequence for an agent is that there is no runtime signal to back off on -
+  it cannot distinguish "slow down" from "broken" and must implement its own
+  client-side ceiling.
+limits: []
+observed:
+  probed: false
+  reason: >-
+    No unauthenticated, publicly reachable endpoint exists on either API to observe
+    live response headers against. Atomik requires a licensed per-customer instance
+    hostname plus credentials; EHRServer is self-hosted with no public demo
+    instance. cloudehrserver.com, the former hosted EHRServer, refused connection on
+    2026-09-02.
+capacity_signals:
+  note: >-
+    What CaboLabs publishes instead of limits are capacity-planning inputs and
+    self-monitoring hooks, both of which put the ceiling in the operator's hands.
+  items:
+  - signal: Pricing quote dimensions
+    detail: '"Expected data volume - Number of EHRs, compositions per day" and "Number of tenants" are two of the four things CaboLabs asks before quoting.'
+    source: https://cabolabs.com/our_software/atomik/pricing
+  - signal: Monitoring API family
+    detail: Exposes health and status indicators for external monitoring tools, especially across a cluster.
+    source: https://atomik.app/documentation/apis
+  - signal: Load testing
+    detail: >-
+      A load-test page is listed in the Atomik documentation navigation, and CaboLabs
+      publishes an open-source load tester for the openEHR API
+      (github.com/ppazos/testehr). Probed 2026-09-02, the load-tests page returns
+      HTTP 200 with a body byte-identical in length to its sibling placeholder, so no
+      published throughput figures exist.
+    source: https://atomik.app/documentation/load_tests

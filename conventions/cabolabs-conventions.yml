@@ -1,0 +1,199 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  https://atomik.app/documentation/apis, /security, /getting_started,
+  /data_versioning, /audit_and_logging, /integrations, /documentation/news;
+  https://atomik.app/conformance; the EHRServer wiki error-code registry and the
+  published EHRServer Insomnia collection. Read 2026-09-02.
+note: >-
+  Cross-cutting runtime semantics for the CaboLabs APIs, assembled by SEARCH of the
+  provider's own documentation. There is no OpenAPI to derive from, so anything not
+  stated in the docs is recorded as undocumented rather than inferred.
+auth_style:
+  summary: JWT bearer token from POST /api/v1/auth, 24h expiry, Authorization header.
+  detail: see authentication/cabolabs-authentication.yml
+base_url:
+  atomik: 'https://{instance}.atomik.app/api/v1'
+  ehrserver: 'https://{your-ehrserver-host}/rest/v1'
+  note: >-
+    Both bases are legitimately TEMPLATED, not missing. Atomik is licensed and
+    deployed per customer - the getting-started page states plainly "Your Atomik
+    endpoint URL: https://your-instance.atomik.app" - and EHRServer is Apache-2.0
+    software the adopter hosts itself. There is no shared multi-tenant production
+    host to name, and no public sandbox instance was found. The consequence for an
+    agent is concrete: it cannot discover or call either API without a customer's
+    own hostname and credentials.
+versioning:
+  style: URI path segment
+  current: v1
+  examples: ['/api/v1/auth', '/api/v1/ehr', '/rest/v1/ehrs']
+  spec_version: >-
+    The wire contract is pinned to openEHR ITS-REST Release-1.0.2 rather than to a
+    CaboLabs-proprietary version - see conformance/cabolabs-conformance.yml.
+  header_versioning: none documented
+content_types:
+  request: application/json (application/x-www-form-urlencoded on the auth endpoint; application/xml on the Operational Template endpoint)
+  response: application/json
+  history: >-
+    Atomik dropped XML support across the APIs in June 2025 in favour of a JSON-only
+    API. The Operational Template API is the one remaining XML surface, and the
+    changelog states it "will be removed soon too to have a 100% JSON API".
+    EHRServer, the older open-source product, still supports both JSON and XML and
+    returns e**.0066 "requested output format is not supported" when asked for
+    neither.
+pagination:
+  documented: false
+  note: >-
+    No pagination style, parameter names, cursor scheme or response envelope fields
+    are documented for either API. Collection endpoints (/rest/v1/ehrs,
+    /rest/v1/templates, /rest/v1/queries) return an object keyed by the collection
+    name - e.g. {"ehrs":[...]}, {"templates":[...]} in the published Insomnia
+    collection - with no page/offset/next fields visible.
+filtering:
+  documented: partial
+  note: >-
+    Query execution accepts fromDate / toDate range filters, an optional ehrUid, an
+    organizationUid, and a group parameter; each has a documented 400-level error
+    code when malformed (e10.0010 to e10.0013). The primary retrieval mechanism is
+    not query-string filtering at all but stored, named queries built in the visual
+    Query Builder and executed by uid - POST /rest/v1/queries/{queryUid}/execute or
+    POST /api/v1/query/composition/execute for an on-the-fly query.
+query_language:
+  name: SAQM (Simple Archetype Query Model)
+  note: >-
+    Atomik implements SAQM, a vendor-neutral query formalism CaboLabs positions as a
+    portability fix for AQL - the argument being that AQL defines syntax but not
+    execution semantics, so the same query can return different results on different
+    CDRs. The conformance page says "The SAQM spec will be publicly available",
+    future tense; no public SAQM specification was found on 2026-09-02, so the
+    query formalism an integrator must learn is currently undocumented in public.
+idempotency:
+  supported: false
+  documented: false
+  header: null
+  note: >-
+    No idempotency key, no request-deduplication header, and no retry-safety
+    guidance is documented for either API. This matters more than usual here: the
+    primary write is a COMPOSITION commit, and the openEHR model makes every commit
+    a new VERSION, so a retried POST does not overwrite - it appends another
+    version to the record. An agent that retries a commit on a timeout produces a
+    duplicate clinical version, and nothing in the API tells it not to.
+  no_pointer_reason: >-
+    No Idempotency pointer is emitted in apis.yml. The Conventions artifact records
+    the ABSENCE of idempotency support, and a pointer would assert its presence.
+dry_run_mode:
+  supported: false
+  note: >-
+    No dry-run, validate-only or preview parameter is documented on any write
+    endpoint. The nearest equivalent is out-of-band and offline: the openEHR-CLI
+    `inval` command (and its MCP tool) validates an instance against the template
+    schema BEFORE the agent posts it. That is real pre-flight validation, but it
+    happens on the client, not as a server-side rehearsal.
+reversibility:
+  grade: documented
+  grade_basis: >-
+    Reversal paths are clearly documented and are structural rather than optional -
+    openEHR versioning means the prior state of every record is always retrievable
+    by OBJECT_VERSION_ID. But NO WINDOW is stated anywhere: CaboLabs publishes no
+    retention period, no undo deadline, and no time limit on physical deletion or on
+    how long prior versions are kept. Per the grading rule that is `documented`
+    (0.4), not `verified` (1.0). No window is asserted here, because the provider
+    states none.
+  model: append-only versioning
+  write_surface: true
+  surfaces:
+  - operation: Commit a COMPOSITION / modify any versionable object
+    reversal: >-
+      There is no undo operation, because there is nothing to undo - "nothing is
+      ever overwritten". Every modification creates a new VERSION linked to the
+      previous one inside a VERSIONED_OBJECT, and version 1 is never deleted. To
+      revert, an agent retrieves the earlier version by its full OBJECT_VERSION_ID
+      and commits it as a new version.
+    operation_id: null
+    window: null
+    window_stated: false
+    docs: https://atomik.app/documentation/data_versioning
+  - operation: Retrieve a prior state
+    reversal: >-
+      GET with a full OBJECT_VERSION_ID
+      ({object_id}::{creating_system_id}::{version_tree_id}) returns that exact
+      historical version; GET with the VERSIONED_OBJECT id returns the latest.
+      Same standard endpoints, no custom query logic.
+    operation_id: null
+    window: null
+    window_stated: false
+    docs: https://atomik.app/documentation/data_versioning
+  - operation: Logical delete
+    reversal: >-
+      A delete is itself recorded as a VERSION whose AUDIT_DETAILS change_type is
+      `deleted`, alongside `creation`, `modification` and `amendment`. The prior
+      content therefore survives the delete and remains retrievable.
+    operation_id: null
+    window: null
+    window_stated: false
+    docs: https://atomik.app/documentation/audit_and_logging
+  - operation: Physical deletion (Administrative API)
+    reversal: none
+    irreversible: true
+    window: null
+    window_stated: false
+    note: >-
+      The Administrative API family exists specifically for "physical deletion for
+      maintenance or regulatory requirements like the right to be forgotten". This
+      is the one CaboLabs operation that is NOT reversible - it destroys the version
+      history the rest of the model guarantees. No confirmation step, grace period,
+      soft-delete window or restore path is documented for it. An agent must treat
+      this family as terminal.
+    docs: https://atomik.app/documentation/apis
+metadata:
+  audit_provenance: >-
+    Every write automatically produces an AUDIT_DETAILS record attached to both the
+    CONTRIBUTION and the VERSION, capturing originating system id, commit timestamp,
+    change type and an optional human-readable description. The caller supplies the
+    committer identity in the openEHR-AUDIT_DETAILS.committer request header. The
+    docs are explicit that this cannot be skipped: "You can't modify a clinical
+    record without producing an audit entry."
+  custom_metadata: No user-defined key/value metadata field is documented.
+request_id_tracing:
+  documented: false
+  note: >-
+    No X-Request-Id, correlation-id or trace header is documented on either API.
+    Atomik maintains system logs recording user, operation and source IP for every
+    Web Console and REST API action, but nothing in the docs hands the caller a
+    request identifier to quote back.
+error_envelope:
+  format: proprietary
+  rfc9457: false
+  note: >-
+    Errors are NOT RFC 9457 application/problem+json. EHRServer publishes a
+    structured registry of dotted codes (e01.0001 through e12.0004) mapped to HTTP
+    status - see errors/cabolabs-problem-types.yml. Atomik publishes no error
+    catalogue at all; its documentation describes error behaviour only in prose
+    ("Requests with expired tokens receive an error response").
+rate_limit_signaling:
+  documented: false
+  note: >-
+    No rate limits, no X-RateLimit-*/RateLimit-* response headers, no Retry-After
+    and no 429 behaviour are documented. See rate-limits/cabolabs-rate-limits.yml.
+prefer_header:
+  supported: true
+  values: ['return=representation']
+  note: >-
+    The getting-started page sends `Prefer: return=representation` on the EHR
+    creation call and shows the full EHR object coming back. This is the openEHR
+    ITS-REST convention, inherited from the specification rather than invented by
+    CaboLabs.
+expansion:
+  documented: partial
+  note: >-
+    Query execution supports a `resolveRefs` flag (named in the October and November
+    2025 changelog entries) that resolves references in query results, and query
+    definitions carry projection and "retrieve data" flags. No sparse-fieldset or
+    field-selection parameter is documented for the resource endpoints.
+cross_references:
+  errors: errors/cabolabs-problem-types.yml
+  lifecycle: lifecycle/cabolabs-lifecycle.yml
+  authentication: authentication/cabolabs-authentication.yml
+  rate_limits: rate-limits/cabolabs-rate-limits.yml
+  data_model: data-model/cabolabs-data-model.yml
+  conformance: conformance/cabolabs-conformance.yml

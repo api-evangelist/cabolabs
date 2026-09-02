@@ -1,0 +1,26 @@
+generated: '2026-09-02'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: cabolabs.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov 29 15:57:54 2026 GMT
+  hsts: false
+- host: atomik.app
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov 29 15:57:46 2026 GMT
+  hsts: false
+domains:
+- domain: cabolabs.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: atomik.app
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: false

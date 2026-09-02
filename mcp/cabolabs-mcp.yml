@@ -1,0 +1,72 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  https://github.com/CaboLabs/openEHR-CLI/blob/master/README.md#mcp-server and the
+  tool definitions in mcp_server/server.py, read 2026-09-02.
+name: openehr-cli MCP server
+status: published
+deployment:
+  mode: local-stdio
+  endpoint: null
+  install: 'claude mcp add openehr-cli mcp_server/.venv/bin/python3 /path/to/openEHR-CLI/mcp_server/server.py'
+  package: https://github.com/CaboLabs/openEHR-CLI
+  auth: none
+  verified: searched
+note: >-
+  This is a REAL, first-party MCP server that CaboLabs ships inside the openEHR-CLI
+  repository (mcp_server/server.py, seven Tool() definitions with full inputSchema).
+  It is local-stdio ONLY - there is no hosted endpoint an agent can POST to. Before
+  it runs, a human must clone the repo, create a Python virtualenv, install
+  mcp_server/requirements.txt, and run ./gradlew installDist to build the CLI the
+  server shells out to. There is no npx/uvx one-liner and no published PyPI or npm
+  package, so the setup cost is higher than the typical stdio server.
+  IMPORTANT SCOPE NOTE: this server does NOT expose the Atomik or EHRServer REST
+  APIs. Its tools operate on openEHR artifacts on the local filesystem - validating,
+  transforming and generating Operational Templates and clinical instances. An agent
+  gets CaboLabs' openEHR modelling toolchain, not access to clinical data.
+prerequisites:
+- 'python3 -m venv mcp_server/.venv && pip install -r mcp_server/requirements.txt'
+- './gradlew installDist  (builds the openehr CLI the server invokes)'
+clients_documented:
+- Claude Code (claude mcp add)
+- Claude.ai desktop app (Settings -> Integrations)
+- Cursor (.cursor/mcp.json)
+- Cline
+- Continue
+- Windsurf
+tools:
+- name: optval
+  description: Validate an Operational Template against the XSD schema.
+  cli_equivalent: openehr optval
+  input_schema_required: [source]
+- name: ingen
+  description: Generate clinical instances from an Operational Template.
+  cli_equivalent: openehr ingen
+  input_schema_required: [source, dest]
+- name: inval
+  description: Validate XML/JSON instances against schemas.
+  cli_equivalent: openehr inval
+  input_schema_required: [source]
+- name: adl2opt
+  description: Convert an ADL archetype to an Operational Template.
+  cli_equivalent: openehr adl2opt
+  input_schema_required: [source, dest]
+- name: trans_opt
+  description: Transform an Operational Template from XML format to JSON format.
+  cli_equivalent: openehr trans opt
+  input_schema_required: [source, dest]
+- name: trans_locatable
+  description: Transform a Locatable between XML and JSON.
+  cli_equivalent: openehr trans locatable
+  input_schema_required: [source, dest]
+- name: uigen
+  description: Generate a Bootstrap HTML UI from an Operational Template.
+  cli_equivalent: openehr uigen
+  input_schema_required: [source, dest]
+tool_count: 7
+crosswalk_emitted: false
+crosswalk_reason: >-
+  A tool crosswalk requires an OpenAPI to bind tools to. CaboLabs publishes no
+  OpenAPI, and in any case these seven tools have no REST counterpart at all - they
+  are local artifact operations, not projections of the Atomik or EHRServer API. A
+  crosswalk would be entirely mcp_only[] rows and would carry no information.

@@ -1,0 +1,114 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  https://atomik.app/documentation/getting_started, /documentation/apis,
+  /documentation/conformance_tests, /documentation/load_tests;
+  https://github.com/CaboLabs/openEHR-CLI;
+  https://github.com/ppazos/openehr-conformance-verification;
+  https://github.com/ppazos/testehr. Searched 2026-09-02.
+hosted_sandbox: false
+public_demo: false
+test_mode_keys: false
+note: >-
+  CaboLabs runs NO hosted sandbox, public demo instance, or try-it console that a
+  developer or an agent can reach without a contract. There is no test-vs-live key
+  prefix, no test-mode toggle, and no hosted test tokens - the model is licence
+  credentials, not API keys, and even the development licence is gated behind
+  "Contact us". What CaboLabs does ship, and ships well, is OFFLINE test tooling:
+  an instance generator, an instance validator, a conformance test suite with
+  canonical datasets, and a load tester - all open source, all runnable before you
+  ever touch a live instance. That is a genuine testing story, it is just a
+  local-toolchain one rather than a sandbox one.
+license_modes:
+- mode: DEV
+  name: Development license
+  description: >-
+    A separate development licence, referenced throughout the getting-started guide
+    ("Atomik license credentials (DEV or PROD)", "Get a Development license ->").
+    No self-serve signup; the link resolves to a contact form.
+  self_serve: false
+  price: not published
+- mode: PROD
+  name: Production license
+  self_serve: false
+  price: not published
+onboarding:
+  documented: true
+  url: https://atomik.app/documentation/getting_started
+  stated_time: ~30 minutes
+  steps:
+  - Access your instance - receive endpoint URL, API credentials and Web Console access (5 min)
+  - Authenticate - POST /api/v1/auth, receive JWT (5 min)
+  - Store data - create an EHR, upload an Operational Template, commit a composition (10 min)
+  - Query data - retrieve what you just stored (10 min)
+  prerequisites:
+  - Atomik licence credentials (DEV or PROD)
+  - Basic understanding of REST APIs
+  - An HTTP client (curl, Postman or equivalent)
+  note: >-
+    The walkthrough is genuinely runnable and carries complete curl invocations with
+    real request headers and real response payloads - but step 1 is "receive your
+    licence", so nothing in it can be executed by an unlicensed reader.
+test_data:
+  note: >-
+    CaboLabs does not publish fixture accounts or magic identifiers. It publishes
+    GENERATORS instead - the openEHR-CLI can synthesize valid clinical instances from
+    any Operational Template, which is the functional equivalent of a fixture set for
+    a standards-based API where the shape of valid data is defined by the customer's
+    own templates.
+  tooling:
+  - name: 'openehr ingen'
+    description: >-
+      Generates synthetic clinical instances from an Operational Template.
+      `--flavor api` produces REST-API-shaped payloads (as opposed to Reference Model
+      shape), `-t version` wraps them in a Version container, `-n` sets the count, and
+      `--with-participations` adds participations. This is the intended way to
+      produce test payloads for Atomik or EHRServer.
+    url: https://github.com/CaboLabs/openEHR-CLI
+    also_available_as: MCP tool `ingen`
+  - name: 'openehr inval'
+    description: Validates XML/JSON instances against the template schemas before you commit them - client-side pre-flight in place of a server-side dry run.
+    url: https://github.com/CaboLabs/openEHR-CLI
+    also_available_as: MCP tool `inval`
+  - name: 'openehr optval'
+    description: Validates an Operational Template against the openEHR XSD schema.
+    url: https://github.com/CaboLabs/openEHR-CLI
+    also_available_as: MCP tool `optval`
+  - name: Sample Blood Pressure template
+    description: The getting-started guide links a complete sample Operational Template (ADL 1.4 XML) and inlines it in full, so a reader has one working template to start from.
+    url: https://atomik.app/documentation/getting_started
+conformance_testing:
+  name: openEHR conformance verification framework
+  url: https://github.com/ppazos/openehr-conformance-verification
+  description: >-
+    An executable conformance test suite for openEHR implementations, shipping a
+    conformance testing specification plus canonical composition datasets in both
+    CANONICAL_JSON and XML. Independently runnable against any openEHR CDR, not just
+    Atomik.
+  license: Apache-2.0
+load_testing:
+  name: testehr
+  url: https://github.com/ppazos/testehr
+  description: Load tester for the openEHR API.
+published_collections:
+- name: EHRServer 2.0 API (Insomnia)
+  format: Insomnia v4 export
+  url: https://github.com/ppazos/cabolabs-ehrserver/blob/master/api/EHRServer_2_0_API_Insomnia.json
+  local_copy: examples/cabolabs-ehrserver-2.0-insomnia.json
+  requests: 73
+  description: >-
+    A real, importable request collection covering the whole EHRServer REST surface -
+    auth, organizations, users, EHRs, templates, contributions, compositions, queries,
+    management stats and sync. The closest thing either product has to a machine-
+    readable contract. Its bundled environments point at localhost, LAN addresses and
+    the now-defunct cloudehrserver.com, so the base URL must be replaced with the
+    reader's own deployment before anything runs.
+  note: >-
+    The published file embeds an expired 2019 sync JWT and a terminology-service key
+    in its environment variables. API Evangelist's saved copy is passed through the
+    network secret sanitizer; the upstream file is unchanged and is CaboLabs' to fix.
+gaps:
+- No hosted sandbox, demo tenant, or interactive API console.
+- No test-vs-live credential distinction at the API level - a DEV licence is a commercial arrangement, not an API mode.
+- No time simulation, test clocks, or event/webhook triggers.
+- No Postman collection or workspace (the published collection is Insomnia format).

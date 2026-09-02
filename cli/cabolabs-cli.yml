@@ -1,0 +1,97 @@
+generated: '2026-09-02'
+method: searched
+source: https://github.com/CaboLabs/openEHR-CLI/blob/master/README.md
+name: openehr
+version: 1.2.1
+released: '2026-08-04'
+license: Apache-2.0
+repository: https://github.com/CaboLabs/openEHR-CLI
+note: >-
+  A first-party command-line tool over the CaboLabs openEHR-SDK for working with
+  openEHR artifacts - Operational Templates (OPTs), clinical instances and ADL
+  archetypes. It is an ARTIFACT-side CLI, not an API client: it does not call the
+  Atomik or EHRServer REST APIs, it validates, transforms and generates the openEHR
+  documents those APIs consume. The same repository ships the CaboLabs MCP server
+  (see mcp/cabolabs-mcp.yml), which exposes these same commands as MCP tools.
+install:
+- method: source
+  command: './gradlew installDist'
+  produces: app/build/install/openehr/bin/openehr
+  note: No published binary release, Homebrew formula, apt package or container image was found.
+usage: 'openehr [-hV] <command> [options]'
+global_options:
+- flag: -h, --help
+  description: Show help and exit
+- flag: -V, --version
+  description: Print version and exit
+commands:
+- name: uigen
+  summary: Generate an HTML form or full page UI from an Operational Template using Bootstrap.
+  options:
+  - flag: -s, --source
+    required: true
+    description: Path to OPT file
+  - flag: -d, --dest
+    required: true
+    description: Destination folder
+  - flag: --bootstrap
+    required: false
+    default: bs5
+    values: [bs4, bs5]
+    description: Bootstrap version
+  - flag: --type
+    required: false
+    default: full
+    values: [full, form]
+    description: Full HTML page or form fragment
+- name: ingen
+  summary: Generate synthetic clinical instances (compositions or other locatables) from an OPT.
+  options:
+  - flag: -s, --source
+    required: true
+    description: Path to OPT file or folder of OPTs
+  - flag: -d, --dest
+    required: true
+    description: Destination folder
+  - flag: -n, --amount
+    required: false
+    default: 1
+    description: Number of instances to generate per OPT
+  - flag: -f, --format
+    required: false
+    default: json
+    values: [json, xml]
+    description: Output format
+  - flag: -t, --type
+    required: false
+    default: locatable
+    values: [locatable, version]
+    description: Whether to wrap output in a Version container
+  - flag: --flavor
+    required: false
+    default: rm
+    values: [rm, api]
+    description: Data structure flavor - Reference Model or REST API
+  - flag: --with-participations
+    required: false
+    description: Add participations (COMPOSITION templates only)
+- name: optval
+  summary: Validate an Operational Template against the XSD schema.
+- name: inval
+  summary: Validate XML/JSON clinical instances against schemas.
+- name: trans
+  summary: Transform openEHR artifacts between formats (OPT XML to JSON, Locatable XML/JSON).
+- name: adl2opt
+  summary: Generate an Operational Template from an ADL archetype.
+- name: diff
+  summary: Diff two Operational Templates.
+key_flows:
+- name: Template to callable form
+  steps: 'adl2opt -> optval -> uigen'
+  note: Turn an ADL archetype into a validated OPT and then a Bootstrap data-entry form.
+- name: Test-data generation
+  steps: 'ingen --flavor api -t version -> inval'
+  note: >-
+    Generate REST-API-flavored openEHR instances suitable for POSTing to Atomik or
+    EHRServer, then validate them before committing. This is the CaboLabs test-data
+    story - see sandbox/cabolabs-sandbox.yml.
