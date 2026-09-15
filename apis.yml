@@ -1,15 +1,14 @@
 aid: cabolabs
 name: CaboLabs
-description: 'CaboLabs Health Informatics is a Montevideo, Uruguay based health informatics
-  company founded in 2012 by Pablo Pazos Gutierrez, specializing in clinical data standards
-  and interoperability. It builds and licenses Atomik, a standardized openEHR Clinical Data
-  Repository and Demographic Data Repository that implements the openEHR ITS REST API
-  Release 1.0.2 over a JWT-authenticated JSON API, and maintains a family of Apache-2.0
-  open source openEHR tooling including the EHRServer clinical data repository, the
-  openEHR-SDK for JVM languages, the openEHR-CLI, an openEHR conformance verification
-  framework, and the openEHR Toolkit. Alongside the software it delivers consultancy,
-  audit and training services covering openEHR, HL7 FHIR, HL7 v2.x, CDA, DICOM and
-  SNOMED CT for hospitals, health-tech startups and software vendors worldwide.'
+description: CaboLabs Health Informatics is a Montevideo, Uruguay based health informatics company founded
+  in 2012 by Pablo Pazos Gutierrez, specializing in clinical data standards and interoperability. It builds
+  and licenses Atomik, a standardized openEHR Clinical Data Repository and Demographic Data Repository
+  that implements the openEHR ITS REST API Release 1.0.2 over a JWT-authenticated JSON API, and maintains
+  a family of Apache-2.0 open source openEHR tooling including the EHRServer clinical data repository,
+  the openEHR-SDK for JVM languages, the openEHR-CLI, an openEHR conformance verification framework, and
+  the openEHR Toolkit. Alongside the software it delivers consultancy, audit and training services covering
+  openEHR, HL7 FHIR, HL7 v2.x, CDA, DICOM and SNOMED CT for hospitals, health-tech startups and software
+  vendors worldwide.
 image: https://cabolabs.com/images/cabolabs_vertical_square_web_text.png
 url: https://raw.githubusercontent.com/api-evangelist/cabolabs/refs/heads/main/apis.yml
 x-type: company
@@ -38,17 +37,15 @@ x-enrichment:
   artifacts_added: 17
   pass: local-v1
 apis:
-- aid: cabolabs-atomik-openehr-rest-api
+- aid: cabolabs:cabolabs-atomik-openehr-rest-api
   name: Atomik openEHR REST API
-  description: 'Atomik is CaboLabs'' standardized Clinical Data Repository and Demographic
-    Data Repository. Its REST API implements the official openEHR ITS REST specification
-    Release 1.0.2 for EHR, EHR_STATUS, CONTRIBUTION, COMPOSITION and DIRECTORY, and adds
-    CaboLabs-proposed API families for the openEHR demographic model (PERSON, ORGANISATION,
-    GROUP, AGENT, ROLE, PARTY_RELATIONSHIP), administrative operations (conformance test
-    support and physical deletion for right-to-be-forgotten), cluster synchronization,
-    and monitoring/health indicators. The API is JSON-only as of June 2025, authenticated
-    with a JWT bearer token obtained from POST /api/v1/auth, and is delivered as a
-    per-customer instance on a licensed deployment.'
+  description: Atomik is CaboLabs' standardized Clinical Data Repository and Demographic Data Repository.
+    Its REST API implements the official openEHR ITS REST specification Release 1.0.2 for EHR, EHR_STATUS,
+    CONTRIBUTION, COMPOSITION and DIRECTORY, and adds CaboLabs-proposed API families for the openEHR demographic
+    model (PERSON, ORGANISATION, GROUP, AGENT, ROLE, PARTY_RELATIONSHIP), administrative operations (conformance
+    test support and physical deletion for right-to-be-forgotten), cluster synchronization, and monitoring/health
+    indicators. The API is JSON-only as of June 2025, authenticated with a JWT bearer token obtained from
+    POST /api/v1/auth, and is delivered as a per-customer instance on a licensed deployment.
   humanURL: https://atomik.app/documentation/apis
   baseURL: https://{instance}.atomik.app/api/v1
   tags:
@@ -72,18 +69,23 @@ apis:
     url: changelog/cabolabs-changelog.yml
   - type: Pricing
     url: https://cabolabs.com/our_software/atomik/pricing
-- aid: cabolabs-ehrserver-rest-api
+- aid: cabolabs:cabolabs-ehrserver-rest-api
   name: CaboLabs EHRServer REST API
-  description: 'EHRServer is CaboLabs'' Apache-2.0 open source, service-oriented openEHR
-    clinical data repository. It exposes a REST API under /rest/v1 for authentication,
-    organizations, users, EHRs, operational templates, contributions, compositions and
-    saved queries, plus a legacy /api/v1 surface and management and synchronization
-    endpoints. The project publishes a machine-readable Insomnia request collection of
-    73 requests and a wiki-published error-code registry. EHRServer is self-hosted, so
-    the base URL is the deployer''s own host.'
+  description: EHRServer is CaboLabs' Apache-2.0 open source, service-oriented openEHR clinical data repository.
+    It exposes a REST API under /rest/v1 for authentication, organizations, users, EHRs, operational templates,
+    contributions, compositions and saved queries, plus a legacy /api/v1 surface and management and synchronization
+    endpoints. The project publishes a machine-readable Insomnia request collection of 73 requests and
+    a wiki-published error-code registry. EHRServer is self-hosted, so the base URL is the deployer's
+    own host.
   humanURL: https://cabolabs.com/our_software/ehrserver
   baseURL: https://{your-ehrserver-host}/rest/v1
   tags:
+  - openEHR
+  - Clinical Data Repository
+  - Electronic Health Records
+  - Open-Source
+  - Health
+  tags_raw:
   - openEHR
   - Clinical Data Repository
   - Electronic Health Records
