@@ -9,6 +9,21 @@ description: CaboLabs Health Informatics is a Montevideo, Uruguay based health i
   the openEHR Toolkit. Alongside the software it delivers consultancy, audit and training services covering
   openEHR, HL7 FHIR, HL7 v2.x, CDA, DICOM and SNOMED CT for hospitals, health-tech startups and software
   vendors worldwide.
+deliveryModel:
+  model: saas
+  license_evidence:
+    not_product:
+    - ppazos/cabolabs-ehrserver
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: low
+  source:
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
 image: https://cabolabs.com/images/cabolabs_vertical_square_web_text.png
 url: https://raw.githubusercontent.com/api-evangelist/cabolabs/refs/heads/main/apis.yml
 x-type: company
@@ -83,7 +98,7 @@ apis:
   - openEHR
   - Clinical Data Repository
   - Electronic Health Records
-  - Open-Source
+  - Open Source
   - Health
   tags_raw:
   - openEHR
@@ -91,6 +106,7 @@ apis:
   - Electronic Health Records
   - Open Source
   - Health
+  - Open-Source
   properties:
   - type: Documentation
     url: https://ppazos.github.io/cabolabs-ehrserver/
