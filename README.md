@@ -64,5 +64,116 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-CaboLabs is a company surfaced via the API Evangelist harvest backlog (source: openehr-coalition) and added to the network as a stub for full-pipeline profiling.
-- https://cabolabs.com/
+CaboLabs Health Informatics is a Montevideo, Uruguay based health informatics company founded in 2012 by Pablo Pazos Gutierrez, specializing in clinical data standards and interoperability. It builds and licenses Atomik, a standardized openEHR Clinical Data Repository and Demographic Data Repository that implements the openEHR ITS REST API Release 1.0.2 over a JWT-authenticated JSON API, and maintains a family of Apache-2.0 open source openEHR tooling including the EHRServer clinical data repository, the openEHR-SDK for JVM languages, the openEHR-CLI, an openEHR conformance verification framework, and the openEHR Toolkit. Alongside the software it delivers consultancy, audit and training services covering openEHR, HL7 FHIR, HL7 v2.x, CDA, DICOM and SNOMED CT for hospitals, health-tech startups and software vendors worldwide.
+
+**Areas:** Company · Health · Healthcare · Interoperability · openEHR · FHIR · HL7 · Clinical Data Repository · Electronic Health Records · Standards · SNOMED CT · DICOM
+
+## CaboLabs on APIs.io
+
+Everything profiled for CaboLabs is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cabolabs/](https://apis.io/providers/cabolabs/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Atomik openEHR REST API](https://apis.io/apis/cabolabs/cabolabs-atomik-openehr-rest-api/) — Atomik is CaboLabs' standardized Clinical Data Repository and Demographic Data Repository. Its REST API implements the official openEHR ITS REST…
+- [CaboLabs EHRServer REST API](https://apis.io/apis/cabolabs/cabolabs-ehrserver-rest-api/) — EHRServer is CaboLabs' Apache-2.0 open source, service-oriented openEHR clinical data repository. It exposes a REST API under /rest/v1 for authentication,…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [openehr-cli MCP server](https://apis.io/servers/cabolabs/openehr-cli-mcp-server/)
+
+#### Examples (1)
+
+Example requests and responses.
+
+- [Cabolabs Ehrserver 2.0 Insomnia](https://apis.io/examples/cabolabs/cabolabs-ehrserver-2.0-insomnia/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Cabolabs Authentication](https://apis.io/security/cabolabs/cabolabs-authentication/)
+- [Cabolabs Domain Security](https://apis.io/security/cabolabs/cabolabs-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Cabolabs Plans Pricing](https://apis.io/plans/cabolabs/cabolabs-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Cabolabs Rate Limits](https://apis.io/rate-limits/cabolabs/cabolabs-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://cabolabs.com/)
+- [Documentation](https://cabolabs.com/our_software/atomik/documentation)
+- [Getting started](https://atomik.app/documentation/getting_started)
+- [API reference](https://atomik.app/documentation/apis)
+- [Pricing](https://cabolabs.com/our_software/atomik/pricing)
+- [Support](https://cabolabs.com/our_software/atomik/faq)
+- [Blog](https://cabolabs.com/blog)
+- [GitHub](https://github.com/CaboLabs)
+
+## API Evangelist rating
+
+**Kin Score 37.7** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.7 |
+| Contract quality | 6.5 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 78.6 |
+| Access clarity | 42.1 |
+
+**Agent readiness 12.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 13.3** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cabolabs/](https://apis.io/providers/cabolabs/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for CaboLabs: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cabolabs/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
